@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import BlockHome1 from './screens/BlockHome1';
+import BlockHome4 from './screens/BlockHome4';
 
 export default function App() {
   return (
    <>
-    <BlockHome1></BlockHome1>
+    <BlockHome4></BlockHome4>
    </>
   );
 }

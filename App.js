@@ -6,11 +6,11 @@ import BlockHome3 from './screens/BlockHome3';
 
 export default function App() {
   return (
-   <>
-    {/* <BlockHome1></BlockHome1> */}
-    {/* <BlockHome2></BlockHome2> */}
-    <BlockHome3></BlockHome3>
-   </>
+    <>
+      {/* <BlockHome1></BlockHome1> */}
+      {/* <BlockHome2></BlockHome2> */}
+      <BlockHome3></BlockHome3>
+    </>
   );
 }
 

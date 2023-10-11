@@ -48,11 +48,11 @@ const BlockHome2 = () => {
 export default BlockHome2;
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#f0edfe",
+    backgroundColor: "#F8F8FF",
     height: "100%",
   },
   restpopular: {
-    marginTop: 250,
+    marginTop: 25,
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 30,

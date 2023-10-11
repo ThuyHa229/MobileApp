@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-const BlockHome1 = () => {
+const BlockHome1 = ({ navigation }) => {
   return (
     <>
       <ScrollView>
@@ -48,7 +48,14 @@ const BlockHome1 = () => {
                 <Text style={styles.restaurantName}>Nearest Restaurant</Text>
               </View>
               <View>
-                <Text style={styles.viewmore}>View More</Text>
+                <Text
+                  style={styles.viewmore}
+                  onPress={() => {
+                    navigation.navigate("BlockHome2");
+                  }}
+                >
+                  View More
+                </Text>
               </View>
             </View>
           </View>
@@ -130,8 +137,9 @@ export default BlockHome1;
 
 const styles = StyleSheet.create({
   HomeBody: {
-    backgroundColor: "#f0edfe",
+    backgroundColor: "#F5F5F5",
     height: "100%",
+    paddingBottom: 150,
   },
   bodyhome: {
     justifyContent: "center",
@@ -144,7 +152,7 @@ const styles = StyleSheet.create({
     height: 170,
     borderRadius: 20,
     width: 400,
-    marginTop: 200,
+    marginTop: 20,
   },
   text1: {
     color: "white",
@@ -190,13 +198,15 @@ const styles = StyleSheet.create({
   },
   rest1: {
     marginTop: 20,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     marginLeft: 30,
     borderRadius: 20,
     width: 180,
     height: 200,
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "#FFFFFF", // Đây là thuộc tính để chỉnh màu biên
+    borderWidth: 2, // Đây là độ rộng của biên
   },
   restName1: {
     fontSize: 18,

@@ -1,45 +1,47 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import React from "react";
 
 const BlockHome2 = () => {
   return (
-    <View style={styles.body}>
-      <View>
-        <Text style={styles.restpopular}>Popular Restaurant</Text>
+    <ScrollView>
+      <View style={styles.body}>
+        <View>
+          <Text style={styles.restpopular}>Popular Restaurant</Text>
+        </View>
+        <View style={styles.restaurant}>
+          <View style={styles.rest1}>
+            <Image source={require("../assets/restaurantImage2.png")} />
+            <Text style={styles.restName}>Vegan Resto</Text>
+            <Text style={styles.restTime}>12 Mins</Text>
+          </View>
+          <View style={styles.rest2}>
+            <Image source={require("../assets/restaurantImage1.png")} />
+            <Text style={styles.restName}>Healthy Food</Text>
+            <Text style={styles.restTime}>8 Mins</Text>
+          </View>
+          <View style={styles.rest1}>
+            <Image source={require("../assets/rest3.png")} />
+            <Text style={styles.restName}>Good Food</Text>
+            <Text style={styles.restTime}>12 Mins</Text>
+          </View>
+          <View style={styles.rest2}>
+            <Image source={require("../assets/rest4.png")} />
+            <Text style={styles.restName}>Smart Resto</Text>
+            <Text style={styles.restTime}>8 Mins</Text>
+          </View>
+          <View style={styles.rest1}>
+            <Image source={require("../assets/rest5.png")} />
+            <Text style={styles.restName}>Vegan Resto</Text>
+            <Text style={styles.restTime}>12 Mins</Text>
+          </View>
+          <View style={styles.rest2}>
+            <Image source={require("../assets/rest6.png")} />
+            <Text style={styles.restName}>Healthy Food</Text>
+            <Text style={styles.restTime}>8 Mins</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.restaurant}>
-        <View style={styles.rest1}>
-          <Image source={require("../assets/restaurantImage2.png")} />
-          <Text style={styles.restName}>Vegan Resto</Text>
-          <Text style={styles.restTime}>12 Mins</Text>
-        </View>
-        <View style={styles.rest2}>
-          <Image source={require("../assets/restaurantImage1.png")} />
-          <Text style={styles.restName}>Healthy Food</Text>
-          <Text style={styles.restTime}>8 Mins</Text>
-        </View>
-        <View style={styles.rest1}>
-          <Image source={require("../assets/rest3.png")} />
-          <Text style={styles.restName}>Good Food</Text>
-          <Text style={styles.restTime}>12 Mins</Text>
-        </View>
-        <View style={styles.rest2}>
-          <Image source={require("../assets/rest4.png")} />
-          <Text style={styles.restName}>Smart Resto</Text>
-          <Text style={styles.restTime}>8 Mins</Text>
-        </View>
-        <View style={styles.rest1}>
-          <Image source={require("../assets/rest5.png")} />
-          <Text style={styles.restName}>Vegan Resto</Text>
-          <Text style={styles.restTime}>12 Mins</Text>
-        </View>
-        <View style={styles.rest2}>
-          <Image source={require("../assets/rest6.png")} />
-          <Text style={styles.restName}>Healthy Food</Text>
-          <Text style={styles.restTime}>8 Mins</Text>
-        </View>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

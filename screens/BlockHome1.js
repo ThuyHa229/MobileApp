@@ -1,86 +1,127 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
 const BlockHome1 = () => {
   return (
     <>
-      <View style={styles.HomeBody}>
-        <View style={styles.bodyhome}>
-          <View style={styles.container}>
-            <Image
-              source={require("../assets/pattern.png")}
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-            />
-            <Image
-              source={require("../assets/imagekem.png")}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 15,
-                height: "100%",
-              }}
-            />
-            <View>
-              <Text style={styles.text1}>Special Deal For October</Text>
+      <ScrollView>
+        <View style={styles.HomeBody}>
+          <View style={styles.bodyhome}>
+            <View style={styles.container}>
+              <Image
+                source={require("../assets/pattern.png")}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+              <Image
+                source={require("../assets/imagekem.png")}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 15,
+                  height: "100%",
+                }}
+              />
+              <View>
+                <Text style={styles.text1}>Special Deal For October</Text>
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={() => {}}
+                >
+                  <Text style={styles.buttonText}>Buy Now</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => {}}
-              >
-                <Text style={styles.buttonText}>Buy Now</Text>
-              </TouchableOpacity>
+            <View style={styles.nearestRestaurant}>
+              <View>
+                <Text style={styles.restaurantName}>Nearest Restaurant</Text>
+              </View>
+              <View>
+                <Text style={styles.viewmore}>View More</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.nearestRestaurant}>
+          <View style={styles.restaurant}>
+            <View style={styles.rest1}>
+              <Image source={require("../assets/restaurantImage2.png")} />
+              <Text style={styles.restName1}>Vegan Resto</Text>
+              <Text style={styles.restTime1}>12 Mins</Text>
+            </View>
+            <View style={styles.rest2}>
+              <Image source={require("../assets/restaurantImage1.png")} />
+              <Text style={styles.restName2}>Healthy Food</Text>
+              <Text style={styles.restTime2}>8 Mins</Text>
+            </View>
+          </View>
+          <View style={styles.popular}>
             <View>
-              <Text style={styles.restaurantName}>Nearest Restaurant</Text>
+              <Text style={styles.popularMenu}>Popular Menu</Text>
             </View>
             <View>
-              <Text style={styles.viewmore}>View More</Text>
+              <Text style={styles.viewmore1}>View More</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.restaurant}>
-          <View style={styles.rest1}>
-            <Image source={require("../assets/restaurantImage2.png")} />
-            <Text style={styles.restName1}>Vegan Resto</Text>
-            <Text style={styles.restTime1}>12 Mins</Text>
-          </View>
-          <View style={styles.rest2}>
-            <Image source={require("../assets/restaurantImage1.png")} />
-            <Text style={styles.restName2}>Healthy Food</Text>
-            <Text style={styles.restTime2}>8 Mins</Text>
-          </View>
-        </View>
-        <View style={styles.popular}>
           <View>
-            <Text style={styles.popularMenu}>Popular Menu</Text>
+            <View style={styles.dish}>
+              <Image
+                source={require("../assets/photomenu1.png")}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              />
+              <Text style={styles.namedish}>Herbal Pancake</Text>
+              <View>
+                <Text style={styles.descri}>Warung Resto</Text>
+              </View>
+              <Text style={styles.price}>$7</Text>
+            </View>
           </View>
           <View>
-            <Text style={styles.viewmore1}>View More</Text>
-          </View>
-        </View>
-        <View>
-          <View style={styles.dish}>
-            <Image
-              source={require("../assets/photomenu.png")}
-              style={{
-                width: 100,
-                height: 100,
-              }}
-            />
-            <Text style={styles.namedish}>Green Noodles</Text>
-            <View>
-              <Text style={styles.descri}>Noodles Home</Text>
+            <View style={styles.dish}>
+              <Image
+                source={require("../assets/photomenu2.png")}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              />
+              <Text style={styles.namedish}>Fruit Salad</Text>
+              <View>
+                <Text style={styles.descri}>Wijie Resto</Text>
+              </View>
+              <Text style={styles.price}>$5</Text>
             </View>
-            <Text style={styles.price}>$15</Text>
+          </View>
+          <View>
+            <View style={styles.dish}>
+              <Image
+                source={require("../assets/photomenu.png")}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              />
+              <Text style={styles.namedish}>Green Noodles</Text>
+              <View>
+                <Text style={styles.descri}>Noodles Home</Text>
+              </View>
+              <Text style={styles.price}>$15</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -205,7 +246,7 @@ const styles = StyleSheet.create({
   dish: {
     marginTop: 30,
     backgroundColor: "white",
-    marginLeft: 30,
+    marginLeft: 20,
     borderRadius: 20,
     width: "90%",
     height: "auto",
@@ -221,7 +262,7 @@ const styles = StyleSheet.create({
   descri: {
     marginTop: 50,
     marginLeft: -248,
-    color: 'gray'
+    color: "gray",
   },
   price: {
     marginTop: 20,

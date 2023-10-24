@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 export default function Home() {
@@ -44,7 +44,22 @@ export default function Home() {
               size={50}
               onFocus={handleTextInputClick}
             />
+
+            <View
+              style={styles.ViewSelectOption}
+            >
+              <Ionicons
+                style={styles.iconnotificationhome}
+                name="options-outline"
+                color={"#6B50F6"}
+                size={30}
+                onPress={handleTextInputClick}
+              ></Ionicons>
+            </View>
+
           </View>
+
+
         </View>
       </View>
     </>
@@ -76,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   viewIconNotificationHome: {
-    width: 60, // Đặt lại kích thước để phù hợp với biểu tượng
+    width: 60,
     height: 60,
     justifyContent: "center",
     alignItems: "center",
@@ -111,10 +126,28 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#f0edfe",
     padding: 10,
-    borderRadius: 10,
-    color: "#áda6B50F6",
+    borderRadius: 15,
+    color: "#bbaefb",
     textAlign: "center",
     placeholderTextColor: "#bbaefb",
     width: "60%",
   },
+  ViewSelectOption: {
+    width: 57,
+    height: 50,
+    backgroundColor: "#f0edfe",
+    borderRadius: 15,
+    left: 20,
+    zIndex: 2,
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:'center'
+
+  },
+  iconOptionsHome: {
+    zIndex: 2,
+    alignSelf: 'center',
+    
+  }
+
 });

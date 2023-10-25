@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 export default function Home() {
   const navigation = useNavigation();
+  const [isBlockHome3Active, setIsBlockHome3Active] = useState(false);
 
   const handleTextInputClick = () => {
-    navigation.navigate("BlockHome3");
+    if (isBlockHome3Active) {
+      navigation.navigate("BlockHome3");
+      setIsBlockHome3Active(false);
+    } else {
+      navigation.navigate("BlockHome1");
+      setIsBlockHome3Active(true);
+    }
   };
   return (
     <>
@@ -42,8 +56,17 @@ export default function Home() {
               placeholder="What do you want to order?"
               textAlignVertical="center"
               size={50}
-              onFocus={handleTextInputClick}
+              placeholderTextColor="#bbaefb"
             />
+            <View style={styles.ViewSelectOption}>
+              <Ionicons
+                style={styles.iconnotificationhome}
+                name="options-outline"
+                color={"#6B50F6"}
+                size={30}
+                onPress={handleTextInputClick}
+              ></Ionicons>
+            </View>
           </View>
         </View>
       </View>
@@ -53,7 +76,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F8F8FF",
-    height: 220
+    height: 220,
   },
   ImageCSS: {
     position: "absolute",
@@ -76,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   viewIconNotificationHome: {
-    width: 60, // Đặt lại kích thước để phù hợp với biểu tượng
+    width: 60,
     height: 60,
     justifyContent: "center",
     alignItems: "center",
@@ -111,9 +134,24 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#f0edfe",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 15,
+    color: "#bbaefb",
     textAlign: "center",
-    placeholderTextColor: "#bbaefb",
     width: "60%",
+  },
+  ViewSelectOption: {
+    width: 57,
+    height: 50,
+    backgroundColor: "#f0edfe",
+    borderRadius: 15,
+    left: 20,
+    zIndex: 2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconOptionsHome: {
+    zIndex: 2,
+    alignSelf: "center",
   },
 });

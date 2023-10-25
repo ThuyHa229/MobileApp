@@ -12,6 +12,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Home />
+
       <Tabs />
     </NavigationContainer>
   );

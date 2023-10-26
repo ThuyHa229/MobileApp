@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import Tabs from "./navigation/tabs";
+import ChatDetail from "./screens/ChatDetail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -11,7 +12,8 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Tabs />
+      {/* <Tabs /> */}
+      <ChatDetail></ChatDetail>
     </NavigationContainer>
   );
 };

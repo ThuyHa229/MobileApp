@@ -45,35 +45,37 @@ export default function Chat() {
           </View>
         </TouchableOpacity>
         <Text style={styles.TitleChat}>Chat</Text>
-        <TouchableOpacity>
-          {/* khung body tin nhắn */}
-          {messages.map((message, index) => (
-            <View style={styles.chating} key={index}>
-              <View
-                style={{
-                  ...styles.photoProfile,
-                  backgroundColor: message.backgroundColor,
-                }}
-              >
-                <Image
-                  source={message.profileImage}
-                  style={styles.ImagePhotoProfile}
-                />
+        {/* khung body tin nhắn */}
+        {messages.map((message, index) => (
+          <View>
+            <TouchableOpacity>
+              <View style={styles.chating} key={index}>
+                <View
+                  style={{
+                    ...styles.photoProfile,
+                    backgroundColor: message.backgroundColor,
+                  }}
+                >
+                  <Image
+                    source={message.profileImage}
+                    style={styles.ImagePhotoProfile}
+                  />
+                </View>
+                <View style={styles.NameAndNotification}>
+                  <Text style={{ marginLeft: 10, marginTop: 7 }}>
+                    {message.name}
+                  </Text>
+                  <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
+                    {message.message}
+                  </Text>
+                </View>
+                <View style={styles.TimeInChating}>
+                  <Text style={{ opacity: 0.3 }}>{message.time}</Text>
+                </View>
               </View>
-              <View style={styles.NameAndNotification}>
-                <Text style={{ marginLeft: 10, marginTop: 7 }}>
-                  {message.name}
-                </Text>
-                <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
-                  {message.message}
-                </Text>
-              </View>
-              <View style={styles.TimeInChating}>
-                <Text style={{ opacity: 0.3 }}>{message.time}</Text>
-              </View>
-            </View>
-          ))}
-        </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+        ))}
       </View>
     </>
   );

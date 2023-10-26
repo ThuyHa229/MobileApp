@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,34 +8,40 @@ import Chat from "../screens/Chat";
 import BlockHome1 from "../screens/BlockHome1";
 import BlockHome2 from "../screens/BlockHome2";
 import BlockHome3 from "../screens/BlockHome3";
+import Home from "../screens/Home";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const HomeStack = () => {
-  
-    return (
-      <Stack.Navigator>
-          <Stack.Screen
-            name="BlockHome1"
-            component={BlockHome1}
-            options={{ headerShown: false }}
-          />
-        <Stack.Screen name="BlockHome2" component={BlockHome2} options={{ headerShown: false }} />
-        <Stack.Screen name="BlockHome3" component={BlockHome3} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    );
-  };
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BlockHome1"
+        component={BlockHome1}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BlockHome2"
+        component={BlockHome2}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BlockHome3"
+        component={BlockHome3}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Tabs = () => {
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused, size, color }) => {
           let iconName;
-
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Profile") {

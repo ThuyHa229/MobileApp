@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-
+import Home from "./Home";
 const BlockHome3 = () => {
   return (
     <ScrollView>
+      <Home></Home>
       <View style={styles.search}>
         <Text style={styles.titles}>Type</Text>
         <View style={styles.blockwords}>
@@ -90,20 +91,20 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginLeft: 20,
   },
-  button:{
-    backgroundColor:'#6B50F6',
-    width: '85%',
+  button: {
+    backgroundColor: "#6B50F6",
+    width: "85%",
     height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     marginLeft: 35,
-    marginTop: 350
+    marginTop: 350,
   },
-  text:{
-    color: 'white',
+  text: {
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
 });

@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import Home from "./Home";
 
 const BlockHome1 = ({ navigation }) => {
   return (
     <>
       <ScrollView>
+        <Home></Home>
         <View style={styles.HomeBody}>
           <View style={styles.bodyhome}>
             <View style={styles.container}>

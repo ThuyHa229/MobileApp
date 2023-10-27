@@ -8,6 +8,7 @@ import ChatDetail from "./screens/ChatDetail";
 import ChatDetailTest from "./screens/ChatDetailTest";
 import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
+import DetailProduct from "./screens/DetailProduct";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -19,7 +20,8 @@ const App = () => {
       {/* <ChatDetail></ChatDetail> */}
       {/* <ChatDetailTest></ChatDetailTest> */}
       {/* <Cart /> */}
-      <Payment />
+      {/* <Payment /> */}
+      <DetailProduct />
     </NavigationContainer>
   );
 };

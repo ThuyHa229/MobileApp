@@ -1,10 +1,11 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Cart() {
-  const messages = [
+  const initialCartItems = [
     {
+      id: 1,
       name: "Spacy fresh crab",
       message: "Waroenk kita",
       money: 35,
@@ -13,6 +14,7 @@ export default function Cart() {
       backgroundColor: "#3D405B",
     },
     {
+      id: 2,
       name: "Paul Koch",
       message: "Waroenk kita",
       money: 35,
@@ -21,6 +23,7 @@ export default function Cart() {
       backgroundColor: "#81B29A",
     },
     {
+      id: 3,
       name: "Carla Klein",
       message: "Waroenk kita",
       money: 35,
@@ -30,69 +33,91 @@ export default function Cart() {
     },
   ];
 
-  return (
-    <>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/Pattern.png")}
-          style={styles.ImageCSS}
-        ></Image>
-        <TouchableOpacity>
-          <View style={styles.ViewBackChat}>
-            <Ionicons
-              style={{ color: "#6B50F6" }}
-              name="chevron-back-outline"
-              size={24}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-        <Text style={styles.TitleChat}>Order details</Text>
-        {/* khung body tin nhắn */}
-        {messages.map((message, index) => (
-          <View>
-            <TouchableOpacity>
-              <View style={styles.chating} key={index}>
-                <View
-                  style={{
-                    ...styles.photoProfile,
-                  }}
-                >
-                  <Image
-                    source={message.profileImage}
-                    style={styles.ImagePhotoProfile}
-                  />
-                </View>
-                <View style={styles.NameAndNotification}>
-                  <Text style={{ marginLeft: 10, marginTop: 7 }}>
-                    {message.name}
-                  </Text>
-                  <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
-                    {message.message}
-                  </Text>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 7,
-                      color: "#6B50F6",
-                      fontWeight: "900",
-                    }}
-                  >
-                    $ {message.money}
-                  </Text>
-                </View>
-                <View style={styles.minus}><Text>-</Text></View>
-                <View style={styles.TimeInChating}>
-                  <Text style={{ color: "#181818" }}>{message.quantity}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
+  const [cartItems, setCartItems] = useState(initialCartItems);
+
+
+  const [totalPrice, setTotalPrice] = useState(35);
+
+  const handleDecreaseQuantity = (id) => {
+    const updatedItems = [...cartItems];
+    const itemIndex = updatedItems.findIndex((item) => item.id === id);
+
+    if (updatedItems[itemIndex].quantity > 1) {
+      updatedItems[itemIndex].quantity -= 1;
+      setCartItems(updatedItems);
+      setTotalPrice(totalPrice - updatedItems[itemIndex].money);
+    }
+  };
+
+  const handleIncreaseQuantity = (id) => {
+    const updatedItems = [...cartItems];
+    const itemIndex = updatedItems.findIndex((item) => item.id === id);
+
+    updatedItems[itemIndex].quantity += 1;
+    setCartItems(updatedItems);
+    setTotalPrice(totalPrice + updatedItems[itemIndex].money);
+  };
+
+  const rightSwipe = () => {
+    return (
+      <View>
+        <Ionicons
+          style={{ color: "#6B50F6" }}
+          name="trash-outline"
+          size={24}
+          color="black"
+        />
       </View>
-    </>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <Image source={require("../assets/images/Pattern.png")} style={styles.ImageCSS}></Image>
+      <TouchableOpacity>
+        <View style={styles.ViewBackChat}>
+          <Ionicons
+            style={{ color: "#6B50F6" }}
+            name="chevron-back-outline"
+            size={24}
+            color="black"
+          />
+        </View>
+      </TouchableOpacity>
+      <Text style={styles.TitleChat}>Order details</Text>
+      {cartItems.map((item, index) => (
+        <View renderRightActions={rightSwipe}>
+          <View style={styles.chating}>
+            <View style={styles.photoProfile}>
+              <Image source={item.profileImage} style={styles.ImagePhotoProfile} />
+            </View>
+            <View style={styles.NameAndNotification}>
+              <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
+              <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>{item.message}</Text>
+              <Text style={{ marginLeft: 10, marginTop: 7, color: "#6B50F6", fontWeight: "900" }}>$ {item.money * item.quantity}</Text>
+            </View>
+            <View style={{ flexDirection: "row", marginRight: 40, alignItems: "center", justifyContent: "center" }}>
+              <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)}>
+                <View style={styles.minus}>
+                  <Text style={{ color: "#181818", fontWeight: 'bold' }}>-</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={styles.quantityItems}>
+                <Text style={{ color: "#181818", fontSize: 16, }}>{item.quantity}</Text>
+              </View>
+              <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
+                <View style={styles.increase}>
+                  <Text>+</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      ))}
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f5f6fe",
@@ -126,9 +151,8 @@ const styles = StyleSheet.create({
     height: 103,
     backgroundColor: "#FFFF",
     borderRadius: 22,
-    width: "88%",
-    marginTop: 25,
-    marginLeft: 30,
+    width: "103%",
+    marginHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -144,25 +168,45 @@ const styles = StyleSheet.create({
   NameAndNotification: {
     height: 62,
     width: 160,
-    backgroundColor: "red",
     borderRadius: 16,
-    marginRight: 45,
+    marginRight: 30,
+    marginTop: -30
   },
-  minus:{
-    backgroundColor: "red",
+  minus: {
+    backgroundColor: '#6B50F6',
+    opacity: 0.1,
+    height: 26,
+    width: 26,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  quantityItems: {
+    height: 20,
+    width: 20,
+    marginRight: 10,
+    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 20,
+  },
+  increase: {
+    backgroundColor: "#6B50F6",
     height: 26,
     width: 26,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8
   },
-  TimeInChating: {
-    height: 20,
-    width: 20,
-    marginRight: 10,
+  swipeoutDeleteButton: {
+    height: 103,
+    borderRadius: 22,
+    width: "88%",
+    marginTop: 25,
+    marginLeft: 30,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "red",
-    marginRight: 70,
+    backgroundColor: "black"
   },
+
 });

@@ -1,8 +1,13 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import ChatDetail from "./ChatDetail";
 
-export default function Chat() {
+
+
+const Chat = () => {
+  const navigation = useNavigation();
   const messages = [
     {
       name: "Louis Kelly",
@@ -27,6 +32,12 @@ export default function Chat() {
     },
   ];
 
+
+  const handleTextInputClick = () => {
+    navigation.navigate("ChatDetail");
+  };
+
+
   return (
     <>
       <View style={styles.container}>
@@ -47,8 +58,8 @@ export default function Chat() {
         <Text style={styles.TitleChat}>Chat</Text>
         {/* khung body tin nhắn */}
         {messages.map((message, index) => (
-          <View>
-            <TouchableOpacity>
+          <View >
+            <TouchableOpacity onPress={handleTextInputClick}>
               <View style={styles.chating} key={index}>
                 <View
                   style={{
@@ -81,6 +92,7 @@ export default function Chat() {
   );
 }
 
+export default Chat;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F8F8FF",
@@ -145,3 +157,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+

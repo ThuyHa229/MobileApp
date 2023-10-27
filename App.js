@@ -15,11 +15,11 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <Tabs /> */}
+      <Tabs />
       {/* <ChatDetail></ChatDetail> */}
       {/* <ChatDetailTest></ChatDetailTest> */}
       {/* <Cart /> */}
-      <Payment />
+      {/* <Payment /> */}
     </NavigationContainer>
   );
 };

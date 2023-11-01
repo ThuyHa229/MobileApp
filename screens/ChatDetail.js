@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default function ChatDetail() {
+const ChatDetail = () => {
 
     const messages = [
         {
@@ -89,7 +89,7 @@ export default function ChatDetail() {
         </>
     )
 }
-
+export default ChatDetail;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFFF",

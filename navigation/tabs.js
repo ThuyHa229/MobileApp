@@ -9,7 +9,7 @@ import BlockHome1 from "../screens/BlockHome1";
 import BlockHome2 from "../screens/BlockHome2";
 import BlockHome3 from "../screens/BlockHome3";
 import Home from "../screens/Home";
-
+import ChatDetail from "../screens/ChatDetail";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +34,7 @@ const HomeStack = () => {
     </Stack.Navigator>
   );
 };
+
 
 const Tabs = () => {
   return (

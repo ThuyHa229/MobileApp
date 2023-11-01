@@ -20,8 +20,8 @@ const App = () => {
       {/* <ChatDetail></ChatDetail> */}
       {/* <ChatDetailTest></ChatDetailTest> */}
       {/* <Cart /> */}
-      {/* <Payment /> */}
-      <DetailProduct />
+      <Payment />
+      {/* <DetailProduct /> */}
     </NavigationContainer>
   );
 };

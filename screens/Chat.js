@@ -3,6 +3,7 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import ChatDetail from "./ChatDetail";
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 
 
@@ -58,9 +59,9 @@ const Chat = () => {
         <Text style={styles.TitleChat}>Chat</Text>
         {/* khung body tin nhắn */}
         {messages.map((message, index) => (
-          <View >
+          <View key={index}>
             <TouchableOpacity onPress={handleTextInputClick}>
-              <View style={styles.chating} key={index}>
+              <View style={styles.chating} >
                 <View
                   style={{
                     ...styles.photoProfile,

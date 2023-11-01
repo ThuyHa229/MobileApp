@@ -45,7 +45,6 @@ export default function Cart() {
     if (updatedItems[itemIndex].quantity > 1) {
       updatedItems[itemIndex].quantity -= 1;
       setCartItems(updatedItems);
-      setTotalPrice(totalPrice - updatedItems[itemIndex].money);
     }
   };
 
@@ -55,7 +54,6 @@ export default function Cart() {
 
     updatedItems[itemIndex].quantity += 1;
     setCartItems(updatedItems);
-    setTotalPrice(totalPrice + updatedItems[itemIndex].money);
   };
 
   const rightSwipe = () => {

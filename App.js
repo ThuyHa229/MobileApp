@@ -8,6 +8,8 @@ import ChatDetail from "./screens/ChatDetail";
 import ChatDetailTest from "./screens/ChatDetailTest";
 import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
+import DetailProduct from "./screens/DetailProduct";
+import DetailRestaurant from "./screens/DetailRestaurant";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -15,11 +17,13 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Tabs />
+      {/* <Tabs /> */}
       {/* <ChatDetail></ChatDetail> */}
       {/* <ChatDetailTest></ChatDetailTest> */}
       {/* <Cart /> */}
       {/* <Payment /> */}
+      {/* <DetailProduct /> */}
+      <DetailRestaurant />
     </NavigationContainer>
   );
 };

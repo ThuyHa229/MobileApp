@@ -3,7 +3,6 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import ChatDetail from "./ChatDetail";
-import { PanGestureHandler } from 'react-native-gesture-handler';
 
 
 

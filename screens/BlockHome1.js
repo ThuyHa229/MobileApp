@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,81 @@ import {
   ScrollView,
 } from "react-native";
 import Home from "./Home";
+import axios from "axios";
 
 const BlockHome1 = ({ navigation }) => {
+  const dishes = [
+    {
+      id: 1,
+      image: "../assets/photomenu1.png",
+      name: "Herbal Pancake",
+      description: "Warung Resto",
+      price: 7,
+      discount: 2
+    },
+    {
+      id: 2,
+      image: "../assets/photomenu2.png",
+      name: "Fruit Salad",
+      description: "Wijie Resto",
+      price: 5,
+      discount: 1
+    },
+    {
+      id: 3,
+      image: "../assets/photomenu.png",
+      name: "Green Noodles",
+      description: "Noodles Home",
+      price: 15,
+      discount: 3
+    },
+  ];
+
+
+  const updatedDishes = dishes.map((dish) => ({
+    ...dish,
+    image: require(dish.image)
+  }));
+
+  console.log("updatedDishes: ", updatedDishes);
+
+
+  const [PostData, setPostData] = useState(false);
+
+  const sendSelectedDishesToApi = (data) => {
+    axios.post('https://63aa9d20fdc006ba6046fffd.mockapi.io/Hotel', data)
+      .then((response) => {
+        console.log('Data sent successfully:', response.data);
+        console.log(data); // In mảng data
+      })
+      .catch((error) => {
+        console.error('Error sending data:', error);
+      });
+  };
+
+  const handleAddToApi = (id) => {
+    const selectedDish = dishes.find((dish) => dish.id === id);
+    sendSelectedDishesToApi(selectedDish);
+    return [selectedDish];
+  }
+
+
+
+
+
+  // const addAllToApi = () => {
+  //   sendSelectedDishesToApi(selectedDishes);
+  // };
+
+  // if (PostData) {
+  //   addAllToApi();
+  //   setPostData(false)
+  // }
+
+  const getImageSource = (imageName) => {
+    return require(`../assets/${imageName}`);
+  };
+
   return (
     <>
       <ScrollView>
@@ -39,7 +112,7 @@ const BlockHome1 = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => {}}
+                  onPress={() => { }}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -81,53 +154,46 @@ const BlockHome1 = ({ navigation }) => {
               <Text style={styles.viewmore1}>View More</Text>
             </View>
           </View>
-          <View>
-            <View style={styles.dish}>
-              <Image
-                source={require("../assets/photomenu1.png")}
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-              />
-              <Text style={styles.namedish}>Herbal Pancake</Text>
-              <View>
-                <Text style={styles.descri}>Warung Resto</Text>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            {dishes.map((dish, index) => (
+              <View style={styles.dish} key={index}>
+                <TouchableOpacity onPress={() => handleAddToApi(dish.id)}>
+                  <View
+                    style={{
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                      width: 370,
+                    }}
+                  >
+                    <Image
+                      source={getImageSource(item.image)}
+                      style={styles.ImageStyle} />
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        width: 230,
+                        marginRight: 30,
+                      }}
+                    >
+                      <Text style={styles.namedish}>{dish.name}</Text>
+                      <Text style={styles.descri}>{dish.description}</Text>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        marginRight: 20,
+                      }}
+                    >
+                      <Text style={styles.price}>${dish.price}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.price}>$7</Text>
-            </View>
-          </View>
-          <View>
-            <View style={styles.dish}>
-              <Image
-                source={require("../assets/photomenu2.png")}
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-              />
-              <Text style={styles.namedish}>Fruit Salad</Text>
-              <View>
-                <Text style={styles.descri}>Wijie Resto</Text>
-              </View>
-              <Text style={styles.price}>$5</Text>
-            </View>
-          </View>
-          <View>
-            <View style={styles.dish}>
-              <Image
-                source={require("../assets/photomenu.png")}
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-              />
-              <Text style={styles.namedish}>Green Noodles</Text>
-              <View>
-                <Text style={styles.descri}>Noodles Home</Text>
-              </View>
-              <Text style={styles.price}>$15</Text>
-            </View>
+            ))}
           </View>
         </View>
       </ScrollView>
@@ -257,30 +323,26 @@ const styles = StyleSheet.create({
   },
   dish: {
     marginTop: 30,
-    backgroundColor: "white",
-    marginLeft: 20,
+    backgroundColor: "#FFFF",
     borderRadius: 20,
-    width: "90%",
-    height: "auto",
+    width: 400,
+    height: 87,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
   },
   namedish: {
-    marginTop: 20,
-    marginRight: 120,
     fontSize: 18,
     fontWeight: "bold",
   },
   descri: {
-    marginTop: 50,
-    marginLeft: -248,
     color: "gray",
   },
   price: {
-    marginTop: 20,
-    marginRight: 30,
     fontSize: 20,
     fontWeight: "bold",
     color: "#6B50F6",
+    position: "absolute",
+    right: 0,
   },
 });

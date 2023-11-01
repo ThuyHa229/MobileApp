@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import OrderDetails from "./OrderDetails";
 
 export default function Cart() {
   const initialCartItems = [
@@ -11,30 +12,29 @@ export default function Cart() {
       money: 35,
       quantity: 1,
       profileImage: require("../assets/photomenu1.png"),
-      backgroundColor: "#3D405B",
+      discount: 5,
     },
     {
       id: 2,
       name: "Paul Koch",
       message: "Waroenk kita",
-      money: 35,
+      money: 40,
       quantity: 1,
       profileImage: require("../assets/photomenu.png"),
-      backgroundColor: "#81B29A",
+      discount: 5,
     },
     {
       id: 3,
       name: "Carla Klein",
       message: "Waroenk kita",
-      money: 35,
+      money: 45,
       quantity: 1,
       profileImage: require("../assets/photomenu2.png"),
-      backgroundColor: "#FFAFCC",
+      discount: 5,
     },
   ];
 
   const [cartItems, setCartItems] = useState(initialCartItems);
-
 
   const [totalPrice, setTotalPrice] = useState(35);
 
@@ -45,6 +45,10 @@ export default function Cart() {
     if (updatedItems[itemIndex].quantity > 1) {
       updatedItems[itemIndex].quantity -= 1;
       setCartItems(updatedItems);
+      const newTotalItemsPrices = calculateTotalMoney();
+      setTotalPriceItemsInCart(newTotalItemsPrices);
+      const totalDiscount = calculateTotalDiscount();
+      setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
     }
   };
 
@@ -54,65 +58,137 @@ export default function Cart() {
 
     updatedItems[itemIndex].quantity += 1;
     setCartItems(updatedItems);
+    const newTotalItemsPrices = calculateTotalMoney();
+    setTotalPriceItemsInCart(newTotalItemsPrices);
+    const totalDiscount = calculateTotalDiscount();
+    setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
   };
 
-  const rightSwipe = () => {
-    return (
-      <View>
-        <Ionicons
-          style={{ color: "#6B50F6" }}
-          name="trash-outline"
-          size={24}
-          color="black"
-        />
-      </View>
-    )
-  }
+  const handleDeleteItem = (id) => {
+    const updatedItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedItems);
 
-  return (
-    <View style={styles.container}>
-      <Image source={require("../assets/images/Pattern.png")} style={styles.ImageCSS}></Image>
-      <TouchableOpacity>
-        <View style={styles.ViewBackChat}>
-          <Ionicons
-            style={{ color: "#6B50F6" }}
-            name="chevron-back-outline"
-            size={24}
-            color="black"
-          />
+    const newTotalPrice = updatedItems.reduce(
+      (total, item) => total + item.money * item.quantity,
+      0
+    );
+    setTotalPrice(newTotalPrice);
+  };
+
+  const renderedItems = cartItems.map((item, index) => (
+    <View key={index}>
+      <View style={styles.chating}>
+        <View style={styles.photoProfile}>
+          <Image source={item.profileImage} style={styles.photoProfile} />
         </View>
-      </TouchableOpacity>
-      <Text style={styles.TitleChat}>Order details</Text>
-      {cartItems.map((item, index) => (
-        <View renderRightActions={rightSwipe}>
-          <View style={styles.chating}>
-            <View style={styles.photoProfile}>
-              <Image source={item.profileImage} style={styles.ImagePhotoProfile} />
+        <View style={styles.NameAndNotification}>
+          <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
+          <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
+            {item.message}
+          </Text>
+          <Text
+            style={{
+              marginLeft: 10,
+              marginTop: 7,
+              color: "#6B50F6",
+              fontWeight: "900",
+            }}
+          >
+            $ {item.money}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            marginRight: 40,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)}>
+            <View style={{ ...styles.minus }}>
+              <Text style={{ color: "#181818", fontWeight: "900" }}>-</Text>
             </View>
-            <View style={styles.NameAndNotification}>
-              <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
-              <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>{item.message}</Text>
-              <Text style={{ marginLeft: 10, marginTop: 7, color: "#6B50F6", fontWeight: "900" }}>$ {item.money * item.quantity}</Text>
+          </TouchableOpacity>
+          <View style={styles.quantityItems}>
+            <Text style={{ color: "#181818", fontSize: 16 }}>
+              {item.quantity}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
+            <View style={styles.increase}>
+              <Text  style={{color: "#FFFF"}}>+</Text>
             </View>
-            <View style={{ flexDirection: "row", marginRight: 40, alignItems: "center", justifyContent: "center" }}>
-              <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)}>
-                <View style={styles.minus}>
-                  <Text style={{ color: "#181818", fontWeight: 'bold' }}>-</Text>
-                </View>
-              </TouchableOpacity>
-              <View style={styles.quantityItems}>
-                <Text style={{ color: "#181818", fontSize: 16, }}>{item.quantity}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  ));
+
+  const calculateTotalMoney = () => {
+    return cartItems.reduce((acc, item) => acc + item.money * item.quantity, 0);
+  };
+  const calculateTotalDiscount = () => {
+    return cartItems.reduce((acc, item) => acc + item.discount, 0);
+  };
+  const DeliveryCharge = 30;
+  const FirstTotalPrices = () => {
+    const totalMoney = calculateTotalMoney();
+    const totalDiscount = calculateTotalDiscount();
+    return totalMoney + totalDiscount - DeliveryCharge;
+  };
+
+  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] =
+    useState(calculateTotalMoney);
+  const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
+    calculateTotalDiscount
+  );
+  const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
+  return (
+    <>
+      <View style={styles.container}>
+        <OrderDetails
+          cartItems={cartItems}
+          renderedItems={renderedItems}
+          handleDeleteItem={handleDeleteItem}
+          styles={styles}
+        />
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View style={styles.TotalPrices}>
+            {/* <Image 
+              source={require("../assets/images/Pattern.png")} 
+              style={{
+                zIndex: 2
+              }} 
+
+            /> */}
+            <View style={styles.TotalViewNameAndPricesItems}>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Sub-Total</Text>
+                <Text style={styles.PriceItem}>{TotalPriceItemsInCart} $</Text>
               </View>
-              <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
-                <View style={styles.increase}>
-                  <Text>+</Text>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Delivery Charge</Text>
+                <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
+              </View>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Discount</Text>
+                <Text style={styles.PriceItem}>
+                  {TotalDiscountItemsInCart} $
+                </Text>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.TextTotal}>Total</Text>
+                <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
+              </View>
+            </View>
+            <View style={styles.BtnPlaceBuyOrder}>
+              <Text style={styles.TextPMO}>Place My Order</Text>
             </View>
           </View>
         </View>
-      ))}
-    </View>
+      </View>
+    </>
   );
 }
 
@@ -149,11 +225,21 @@ const styles = StyleSheet.create({
     height: 103,
     backgroundColor: "#FFFF",
     borderRadius: 22,
-    width: "103%",
+    width: "90%",
     marginHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: 20,
+  },
+  buttondelete: {
+    height: 103,
+    backgroundColor: "#6B50F6",
+    borderRadius: 22,
+    width: "90%",
+    marginHorizontal: 20,
+    justifyContent: "center",
+    marginTop: 20,
   },
   photoProfile: {
     height: 62,
@@ -168,11 +254,10 @@ const styles = StyleSheet.create({
     width: 160,
     borderRadius: 16,
     marginRight: 30,
-    marginTop: -30
+    marginTop: -30,
   },
   minus: {
-    backgroundColor: '#6B50F6',
-    opacity: 0.1,
+    backgroundColor: "#f0edfe",
     height: 26,
     width: 26,
     justifyContent: "center",
@@ -194,17 +279,69 @@ const styles = StyleSheet.create({
     width: 26,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8
+    borderRadius: 8,
   },
-  swipeoutDeleteButton: {
-    height: 103,
-    borderRadius: 22,
-    width: "88%",
-    marginTop: 25,
-    marginLeft: 30,
+  TotalPrices: {
+    height: 206,
+    width: 420,
+    backgroundColor: "#6B50F6",
+    borderRadius: 16,
+    marginTop: 50,
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "black"
   },
-
+  TotalViewNameAndPricesItems: {
+    height: 95,
+    width: 295,
+    marginTop: 20,
+    justifyContent: "space-between",
+  },
+  TitleAndPrices: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  TitleItem: {
+    color: "#FFFF",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  PriceItem: {
+    color: "#FFFF",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  ViewTotal: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  TextTotal: {
+    color: "#FFFF",
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  TotalPrice: {
+    color: "#FFFF",
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  BtnPlaceBuyOrder: {
+    width: 325,
+    height: 57,
+    borderRadius: 15,
+    backgroundColor: "#FFFF",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  TextPMO: {
+    color: "#6B50F6",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  // Subtotal: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   backgroundColor: "red",
+  // },
 });

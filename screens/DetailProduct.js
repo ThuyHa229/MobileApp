@@ -5,21 +5,40 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dishes from "./Data/DataDish";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 const DetailProduct = () => {
-  const route = useRoute()
-  const navigate = useNavigation()
+  const route = useRoute();
+  const navigate = useNavigation();
   const { productId } = route.params;
 
   const selectedDish = dishes.find((dish) => dish.id === productId);
 
+  const handleAddToCart = (id) => {
+    const idOfAddToCard = id;
+    Alert.alert(
+      "Success!",
+      "Item has been added to your cart.",
+      [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+          style: "default", 
+        },
+      ],
+      { cancelable: false } 
+    );
+  };
   return (
     <ScrollView>
-      <TouchableOpacity style={{ position: "absolute", zIndex: 1, top: 15, left: 20 }}>
+      <TouchableOpacity
+        style={{ position: "absolute", zIndex: 1, top: 15, left: 20 }}
+      >
         <View style={styles.ViewBackChat}>
           <Ionicons
             style={{ color: "#6B50F6" }}
@@ -194,10 +213,7 @@ const DetailProduct = () => {
               This is greate. So delicious! You Must Here. With Your Family . .
             </Text>
           </View>
-          <TouchableOpacity
-
-  
-          >
+          <TouchableOpacity onPress={() => handleAddToCart(selectedDish.id)}>
             <View style={styles.btnAddToCart}>
               <Text
                 style={{

@@ -10,11 +10,11 @@ import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import OrderDetails from "./OrderDetails";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 export default function Cart() {
   const route = useRoute();
-  const { id } = route.params;
-
+  const [showAlert, setShowAlert] = useState(false);
   const navigation = useNavigation();
   
   const initialCartItems = [
@@ -200,15 +200,13 @@ export default function Cart() {
               </View>
             </View>
             <TouchableOpacity
-              onPress={() => {
-                navigation.push("Shipping")
-              }}
-
+              onPress={() => setShowAlert(!showAlert)}
             >
               <View style={styles.BtnPlaceBuyOrder}>
                 <Text style={styles.TextPMO}>Place My Order</Text>
               </View>
             </TouchableOpacity>
+            <AwesomeAlert show={showAlert} title="thanh cong" message="good chop"></AwesomeAlert>
           </View>
         </View>
       </View>

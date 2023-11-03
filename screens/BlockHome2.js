@@ -50,6 +50,7 @@ const BlockHome2 = () => {
 };
 
 export default BlockHome2;
+
 const styles = StyleSheet.create({
   body: {
     backgroundColor: "#F8F8FF",

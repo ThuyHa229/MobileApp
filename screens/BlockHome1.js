@@ -9,79 +9,53 @@ import {
 } from "react-native";
 import Home from "./Home";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const BlockHome1 = ({ navigation }) => {
   const dishes = [
     {
       id: 1,
-      image: "../assets/photomenu1.png",
+      image: require("../assets/photomenu1.png"),
       name: "Herbal Pancake",
       description: "Warung Resto",
       price: 7,
-      discount: 2
+      discount: 2,
     },
     {
       id: 2,
-      image: "../assets/photomenu2.png",
+      image: require("../assets/photomenu2.png"),
       name: "Fruit Salad",
       description: "Wijie Resto",
       price: 5,
-      discount: 1
+      discount: 1,
     },
     {
       id: 3,
-      image: "../assets/photomenu.png",
+      image: require("../assets/photomenu.png"),
       name: "Green Noodles",
       description: "Noodles Home",
       price: 15,
-      discount: 3
+      discount: 3,
     },
   ];
 
-
-  const updatedDishes = dishes.map((dish) => ({
-    ...dish,
-    image: require(dish.image)
-  }));
-
-  console.log("updatedDishes: ", updatedDishes);
-
-
-  const [PostData, setPostData] = useState(false);
-
-  const sendSelectedDishesToApi = (data) => {
-    axios.post('https://63aa9d20fdc006ba6046fffd.mockapi.io/Hotel', data)
-      .then((response) => {
-        console.log('Data sent successfully:', response.data);
-        console.log(data); // In mảng data
-      })
-      .catch((error) => {
-        console.error('Error sending data:', error);
-      });
-  };
-
-  const handleAddToApi = (id) => {
-    const selectedDish = dishes.find((dish) => dish.id === id);
-    sendSelectedDishesToApi(selectedDish);
-    return [selectedDish];
-  }
-
-
-
-
-
-  // const addAllToApi = () => {
-  //   sendSelectedDishesToApi(selectedDishes);
+  // const sendSelectedDishesToApi = (data) => {
+  //   axios
+  //     .post("https://63aa9d20fdc006ba6046fffd.mockapi.io/Hotel", data)
+  //     .then((response) => {
+  //       console.log("Data sent successfully:", response.data);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error sending data:", error);
+  //     });
   // };
 
-  // if (PostData) {
-  //   addAllToApi();
-  //   setPostData(false)
-  // }
-
-  const getImageSource = (imageName) => {
-    return require(`../assets/${imageName}`);
-  };
+  // const handleAddToApi = (id) => {
+  //   const selectedDish = dishes.find((dish) => dish.id === id);
+  //   sendSelectedDishesToApi(selectedDish);
+  //   return [selectedDish];
+  // };
 
   return (
     <>
@@ -112,7 +86,7 @@ const BlockHome1 = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => { }}
+                  onPress={() => {}}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -135,11 +109,17 @@ const BlockHome1 = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.restaurant}>
-            <View style={styles.rest1}>
-              <Image source={require("../assets/restaurantImage2.png")} />
-              <Text style={styles.restName1}>Vegan Resto</Text>
-              <Text style={styles.restTime1}>12 Mins</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push("DetailRestaurant");
+              }}
+            >
+              <View style={styles.rest1}>
+                <Image source={require("../assets/restaurantImage2.png")} />
+                <Text style={styles.restName1}>Vegan Resto</Text>
+                <Text style={styles.restTime1}>12 Mins</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.rest2}>
               <Image source={require("../assets/restaurantImage1.png")} />
               <Text style={styles.restName2}>Healthy Food</Text>
@@ -161,7 +141,12 @@ const BlockHome1 = ({ navigation }) => {
           >
             {dishes.map((dish, index) => (
               <View style={styles.dish} key={index}>
-                <TouchableOpacity onPress={() => handleAddToApi(dish.id)}>
+                {/* onPress={() => handleAddToApi(dish.id)} */}
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.push("DetailProduct");
+                  }}
+                >
                   <View
                     style={{
                       justifyContent: "space-between",
@@ -169,9 +154,7 @@ const BlockHome1 = ({ navigation }) => {
                       width: 370,
                     }}
                   >
-                    <Image
-                      source={getImageSource(item.image)}
-                      style={styles.ImageStyle} />
+                    <Image source={dish.image} style={styles.ImageStyle} />
                     <View
                       style={{
                         justifyContent: "center",

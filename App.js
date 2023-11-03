@@ -17,13 +17,33 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <Tabs /> */}
-      {/* <ChatDetail></ChatDetail> */}
-      {/* <ChatDetailTest></ChatDetailTest> */}
-      {/* <Cart /> */}
-      {/* <Payment /> */}
-      {/* <DetailProduct /> */}
-      <DetailRestaurant />
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerShown: false,
+        })}
+      >
+        <Stack.Screen 
+          name="Tab" 
+          component={Tabs}>
+        </Stack.Screen>
+        <Stack.Screen
+          name="DetailProduct"
+          component={DetailProduct}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="DetailRestaurant"
+          component={DetailRestaurant}
+        ></Stack.Screen>
+
+        {/* <ChatDetail></ChatDetail> */}
+        {/* <ChatDetailTest></ChatDetailTest> */}
+        {/* <Cart /> */}
+        {/* <Payment /> */}
+        {/* <DetailProduct /> */}
+        {/* <DetailRestaurant /> */}
+        {/* <DetailProduct></DetailProduct> */}
+        {/* <StackScreen /> */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

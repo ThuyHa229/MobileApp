@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import OrderDetails from "./OrderDetails";
@@ -48,7 +55,9 @@ export default function Cart() {
       const newTotalItemsPrices = calculateTotalMoney();
       setTotalPriceItemsInCart(newTotalItemsPrices);
       const totalDiscount = calculateTotalDiscount();
-      setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
+      setTotalPricesInCart(
+        newTotalItemsPrices - DeliveryCharge + totalDiscount
+      );
     }
   };
 
@@ -117,7 +126,7 @@ export default function Cart() {
           </View>
           <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
             <View style={styles.increase}>
-              <Text  style={{color: "#FFFF"}}>+</Text>
+              <Text style={{ color: "#FFFF" }}>+</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -146,48 +155,54 @@ export default function Cart() {
   const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
   return (
     <>
-      <View style={styles.container}>
-        <OrderDetails
-          cartItems={cartItems}
-          renderedItems={renderedItems}
-          handleDeleteItem={handleDeleteItem}
-          styles={styles}
-        />
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <View style={styles.TotalPrices}>
-            {/* <Image 
+      <ScrollView>
+        <View style={styles.container}>
+          <OrderDetails
+            cartItems={cartItems}
+            renderedItems={renderedItems}
+            handleDeleteItem={handleDeleteItem}
+            styles={styles}
+          />
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View style={styles.TotalPrices}>
+              {/* <Image 
               source={require("../assets/images/Pattern.png")} 
               style={{
                 zIndex: 2
               }} 
 
             /> */}
-            <View style={styles.TotalViewNameAndPricesItems}>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Sub-Total</Text>
-                <Text style={styles.PriceItem}>{TotalPriceItemsInCart} $</Text>
+              <View style={styles.TotalViewNameAndPricesItems}>
+                <View style={styles.TitleAndPrices}>
+                  <Text style={styles.TitleItem}>Sub-Total</Text>
+                  <Text style={styles.PriceItem}>
+                    {TotalPriceItemsInCart} $
+                  </Text>
+                </View>
+                <View style={styles.TitleAndPrices}>
+                  <Text style={styles.TitleItem}>Delivery Charge</Text>
+                  <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
+                </View>
+                <View style={styles.TitleAndPrices}>
+                  <Text style={styles.TitleItem}>Discount</Text>
+                  <Text style={styles.PriceItem}>
+                    {TotalDiscountItemsInCart} $
+                  </Text>
+                </View>
+                <View style={styles.ViewTotal}>
+                  <Text style={styles.TextTotal}>Total</Text>
+                  <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
+                </View>
               </View>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Delivery Charge</Text>
-                <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
-              </View>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Discount</Text>
-                <Text style={styles.PriceItem}>
-                  {TotalDiscountItemsInCart} $
-                </Text>
-              </View>
-              <View style={styles.ViewTotal}>
-                <Text style={styles.TextTotal}>Total</Text>
-                <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
-              </View>
-            </View>
-            <View style={styles.BtnPlaceBuyOrder}>
-              <Text style={styles.TextPMO}>Place My Order</Text>
+              <TouchableOpacity>
+                <View style={styles.BtnPlaceBuyOrder}>
+                  <Text style={styles.TextPMO}>Place My Order</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 }
@@ -195,7 +210,7 @@ export default function Cart() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f5f6fe",
-    height: 920,
+    paddingBottom: 100,
   },
   ImageCSS: {
     position: "absolute",

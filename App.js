@@ -10,6 +10,8 @@ import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
 import DetailProduct from "./screens/DetailProduct";
 import DetailRestaurant from "./screens/DetailRestaurant";
+import Shipping from "./screens/Shipping";
+import BlockHome1 from "./screens/BlockHome1";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,8 +24,8 @@ const App = () => {
           headerShown: false,
         })}
       >
-        <Stack.Screen 
-          name="Tab" 
+        <Stack.Screen
+          name="Tab"
           component={Tabs}>
         </Stack.Screen>
         <Stack.Screen
@@ -34,15 +36,13 @@ const App = () => {
           name="DetailRestaurant"
           component={DetailRestaurant}
         ></Stack.Screen>
+        <Stack.Screen
+          name="Shipping"
+          component={Shipping}
+        ></Stack.Screen>
+        <Stack.Screen name="BlockHome1" component={BlockHome1} />
+        <Stack.Screen name="Cart" component={Cart}/>
 
-        {/* <ChatDetail></ChatDetail> */}
-        {/* <ChatDetailTest></ChatDetailTest> */}
-        {/* <Cart /> */}
-        {/* <Payment /> */}
-        {/* <DetailProduct /> */}
-        {/* <DetailRestaurant /> */}
-        {/* <DetailProduct></DetailProduct> */}
-        {/* <StackScreen /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

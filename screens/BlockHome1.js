@@ -10,34 +10,9 @@ import {
 import Home from "./Home";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-
+import dishes from "./Data/DataDish";
 const BlockHome1 = ({ navigation }) => {
-  const dishes = [
-    {
-      id: 1,
-      image: require("../assets/photomenu1.png"),
-      name: "Herbal Pancake",
-      description: "Warung Resto",
-      price: 7,
-      discount: 2,
-    },
-    {
-      id: 2,
-      image: require("../assets/photomenu2.png"),
-      name: "Fruit Salad",
-      description: "Wijie Resto",
-      price: 5,
-      discount: 1,
-    },
-    {
-      id: 3,
-      image: require("../assets/photomenu.png"),
-      name: "Green Noodles",
-      description: "Noodles Home",
-      price: 15,
-      discount: 3,
-    },
-  ];
+
 
   // const sendSelectedDishesToApi = (data) => {
   //   axios
@@ -86,7 +61,7 @@ const BlockHome1 = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => {}}
+                  onPress={() => { }}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -144,7 +119,7 @@ const BlockHome1 = ({ navigation }) => {
                 {/* onPress={() => handleAddToApi(dish.id)} */}
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.push("DetailProduct");
+                    navigation.push("DetailProduct", { productId: dish.id });
                   }}
                 >
                   <View
@@ -154,7 +129,7 @@ const BlockHome1 = ({ navigation }) => {
                       width: 370,
                     }}
                   >
-                    <Image source={dish.image} style={styles.ImageStyle} />
+                    <Image source={{ uri: dish.image }} style={styles.imageCss} />
                     <View
                       style={{
                         justifyContent: "center",
@@ -313,6 +288,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  imageCss: { 
+    height: 64, 
+    width: 64, 
+    borderRadius: 10 
   },
   namedish: {
     fontSize: 18,

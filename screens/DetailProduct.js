@@ -7,14 +7,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import dishes from "./Data/DataDish";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
-
 const DetailProduct = () => {
-  const navigate = useNavigation();
+  const route = useRoute()
+  const navigate = useNavigation()
+  const { productId } = route.params;
+
+  const selectedDish = dishes.find((dish) => dish.id === productId);
+
   return (
     <ScrollView>
-      <TouchableOpacity style={{position: "absolute", zIndex: 1, top: 15, left: 20}}>
+      <TouchableOpacity style={{ position: "absolute", zIndex: 1, top: 15, left: 20 }}>
         <View style={styles.ViewBackChat}>
           <Ionicons
             style={{ color: "#6B50F6" }}
@@ -30,7 +35,7 @@ const DetailProduct = () => {
       <View style={{ paddingBottom: 10 }}>
         <View>
           <Image
-            source={require("../assets/photomenu5.png")}
+            source={{ uri: selectedDish.image }}
             style={{
               width: "100%",
               height: 400,
@@ -71,7 +76,7 @@ const DetailProduct = () => {
             </View>
           </View>
           <View>
-            <Text style={styles.name}> Rainbow Sandwich {"\n"} Sugarless </Text>
+            <Text style={styles.name}>{selectedDish.name}</Text>
           </View>
           <View
             style={{
@@ -189,17 +194,22 @@ const DetailProduct = () => {
               This is greate. So delicious! You Must Here. With Your Family . .
             </Text>
           </View>
-          <View style={styles.btnAddToCart}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "#ffff",
-              }}
-            >
-              Add To Cart
-            </Text>
-          </View>
+          <TouchableOpacity
+
+  
+          >
+            <View style={styles.btnAddToCart}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  color: "#ffff",
+                }}
+              >
+                Add To Cart
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

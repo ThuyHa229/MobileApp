@@ -9,8 +9,14 @@ import {
 import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import OrderDetails from "./OrderDetails";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Cart() {
+  const route = useRoute();
+  const { id } = route.params;
+
+  const navigation = useNavigation();
+  
   const initialCartItems = [
     {
       id: 1,
@@ -155,54 +161,57 @@ export default function Cart() {
   const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
   return (
     <>
-      <ScrollView>
-        <View style={styles.container}>
-          <OrderDetails
-            cartItems={cartItems}
-            renderedItems={renderedItems}
-            handleDeleteItem={handleDeleteItem}
-            styles={styles}
-          />
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <View style={styles.TotalPrices}>
-              {/* <Image 
+      <View style={styles.container}>
+        <OrderDetails
+          cartItems={cartItems}
+          renderedItems={renderedItems}
+          handleDeleteItem={handleDeleteItem}
+          styles={styles}
+        />
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View style={styles.TotalPrices}>
+            {/* <Image 
               source={require("../assets/images/Pattern.png")} 
               style={{
                 zIndex: 2
               }} 
 
             /> */}
-              <View style={styles.TotalViewNameAndPricesItems}>
-                <View style={styles.TitleAndPrices}>
-                  <Text style={styles.TitleItem}>Sub-Total</Text>
-                  <Text style={styles.PriceItem}>
-                    {TotalPriceItemsInCart} $
-                  </Text>
-                </View>
-                <View style={styles.TitleAndPrices}>
-                  <Text style={styles.TitleItem}>Delivery Charge</Text>
-                  <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
-                </View>
-                <View style={styles.TitleAndPrices}>
-                  <Text style={styles.TitleItem}>Discount</Text>
-                  <Text style={styles.PriceItem}>
-                    {TotalDiscountItemsInCart} $
-                  </Text>
-                </View>
-                <View style={styles.ViewTotal}>
-                  <Text style={styles.TextTotal}>Total</Text>
-                  <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
-                </View>
+            <View style={styles.TotalViewNameAndPricesItems}>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Sub-Total</Text>
+                <Text style={styles.PriceItem}>
+                  {TotalPriceItemsInCart} $
+                </Text>
               </View>
-              <TouchableOpacity>
-                <View style={styles.BtnPlaceBuyOrder}>
-                  <Text style={styles.TextPMO}>Place My Order</Text>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Delivery Charge</Text>
+                <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
+              </View>
+              <View style={styles.TitleAndPrices}>
+                <Text style={styles.TitleItem}>Discount</Text>
+                <Text style={styles.PriceItem}>
+                  {TotalDiscountItemsInCart} $
+                </Text>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.TextTotal}>Total</Text>
+                <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
+              </View>
             </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push("Shipping")
+              }}
+
+            >
+              <View style={styles.BtnPlaceBuyOrder}>
+                <Text style={styles.TextPMO}>Place My Order</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </>
   );
 }

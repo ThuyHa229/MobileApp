@@ -10,7 +10,6 @@ import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
 import DetailProduct from "./screens/DetailProduct";
 import DetailRestaurant from "./screens/DetailRestaurant";
-import Shipping from "./screens/Shipping";
 import BlockHome1 from "./screens/BlockHome1";
 
 const Tab = createBottomTabNavigator();
@@ -24,10 +23,7 @@ const App = () => {
           headerShown: false,
         })}
       >
-        <Stack.Screen
-          name="Tab"
-          component={Tabs}>
-        </Stack.Screen>
+        <Stack.Screen name="Tab" component={Tabs}></Stack.Screen>
         <Stack.Screen
           name="DetailProduct"
           component={DetailProduct}
@@ -37,12 +33,9 @@ const App = () => {
           component={DetailRestaurant}
         ></Stack.Screen>
         <Stack.Screen
-          name="Shipping"
-          component={Shipping}
+          name="BlockHome1"
+          component={BlockHome1}
         ></Stack.Screen>
-        <Stack.Screen name="BlockHome1" component={BlockHome1} />
-        <Stack.Screen name="Cart" component={Cart}/>
-
       </Stack.Navigator>
     </NavigationContainer>
   );

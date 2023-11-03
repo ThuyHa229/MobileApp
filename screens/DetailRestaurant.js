@@ -1,7 +1,10 @@
-import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const DetailRestaurant = () => {
+  const navigate = useNavigation();
   const dishes = [
     {
       image: require("../assets/pizza.png"),
@@ -19,9 +22,25 @@ const DetailRestaurant = () => {
       price: 15,
     },
   ];
+
   return (
     <ScrollView>
-      <View style={{ paddingBottom: 20 }}>
+      <TouchableOpacity
+        style={{ position: "absolute", zIndex: 1, top: 15, left: 20 }}
+      >
+        <View style={styles.ViewBackChat}>
+          <Ionicons
+            style={{ color: "#6B50F6" }}
+            name="chevron-back-outline"
+            size={24}
+            color="black"
+            onPress={() => {
+              navigate.push("BlockHome1");
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+      <View style={{ paddingBottom: 20, backgroundColor: "#F8F8FF" }}>
         <View>
           <View>
             <Image
@@ -204,11 +223,8 @@ const DetailRestaurant = () => {
 export default DetailRestaurant;
 const styles = StyleSheet.create({
   infor: {
-    marginTop: -40,
     height: 155,
-    backgroundColor: "white",
-    borderTopLeftRadius: 38,
-    borderTopRightRadius: 38,
+    borderTopRightRadius: 30,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -322,5 +338,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  ViewBackChat: {
+    backgroundColor: "#ffff",
+    height: 40,
+    width: 60,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
   },
 });

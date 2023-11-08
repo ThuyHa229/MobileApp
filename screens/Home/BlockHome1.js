@@ -10,28 +10,8 @@ import {
 import Home from "./Home";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import dishes from "./Data/DataDish";
+import dishes from "../Data/DataDish";
 const BlockHome1 = ({ navigation }) => {
-
-
-  // const sendSelectedDishesToApi = (data) => {
-  //   axios
-  //     .post("https://63aa9d20fdc006ba6046fffd.mockapi.io/Hotel", data)
-  //     .then((response) => {
-  //       console.log("Data sent successfully:", response.data);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error sending data:", error);
-  //     });
-  // };
-
-  // const handleAddToApi = (id) => {
-  //   const selectedDish = dishes.find((dish) => dish.id === id);
-  //   sendSelectedDishesToApi(selectedDish);
-  //   return [selectedDish];
-  // };
-
   return (
     <>
       <ScrollView>
@@ -40,14 +20,14 @@ const BlockHome1 = ({ navigation }) => {
           <View style={styles.bodyhome}>
             <View style={styles.container}>
               <Image
-                source={require("../assets/pattern.png")}
+                source={require("../../assets/pattern.png")}
                 style={{
                   width: "100%",
                   height: "100%",
                 }}
               />
               <Image
-                source={require("../assets/imagekem.png")}
+                source={require("../../assets/imagekem.png")}
                 style={{
                   position: "absolute",
                   top: 0,
@@ -61,7 +41,7 @@ const BlockHome1 = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => { }}
+                  onPress={() => {}}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -75,7 +55,7 @@ const BlockHome1 = ({ navigation }) => {
                 <Text
                   style={styles.viewmore}
                   onPress={() => {
-                    navigation.navigate("BlockHome2");
+                    navigation.navigate("DetailRestaurant");
                   }}
                 >
                   View More
@@ -90,13 +70,13 @@ const BlockHome1 = ({ navigation }) => {
               }}
             >
               <View style={styles.rest1}>
-                <Image source={require("../assets/restaurantImage2.png")} />
+                <Image source={require("../../assets/restaurantImage2.png")} />
                 <Text style={styles.restName1}>Vegan Resto</Text>
                 <Text style={styles.restTime1}>12 Mins</Text>
               </View>
             </TouchableOpacity>
             <View style={styles.rest2}>
-              <Image source={require("../assets/restaurantImage1.png")} />
+              <Image source={require("../../assets/restaurantImage1.png")} />
               <Text style={styles.restName2}>Healthy Food</Text>
               <Text style={styles.restTime2}>8 Mins</Text>
             </View>
@@ -119,7 +99,9 @@ const BlockHome1 = ({ navigation }) => {
                 {/* onPress={() => handleAddToApi(dish.id)} */}
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.push("DetailProduct", { productId: dish.id });
+                    navigation.navigate("DetailProduct", {
+                      productId: dish.id,
+                    });
                   }}
                 >
                   <View
@@ -129,7 +111,10 @@ const BlockHome1 = ({ navigation }) => {
                       width: 370,
                     }}
                   >
-                    <Image source={{ uri: dish.image }} style={styles.imageCss} />
+                    <Image
+                      source={{ uri: dish.image }}
+                      style={styles.imageCss}
+                    />
                     <View
                       style={{
                         justifyContent: "center",

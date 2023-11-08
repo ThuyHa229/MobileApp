@@ -16,7 +16,7 @@ export default function Cart() {
   const route = useRoute();
   const [showAlert, setShowAlert] = useState(false);
   const navigation = useNavigation();
-  
+
   const initialCartItems = [
     {
       id: 1,
@@ -180,9 +180,7 @@ export default function Cart() {
             <View style={styles.TotalViewNameAndPricesItems}>
               <View style={styles.TitleAndPrices}>
                 <Text style={styles.TitleItem}>Sub-Total</Text>
-                <Text style={styles.PriceItem}>
-                  {TotalPriceItemsInCart} $
-                </Text>
+                <Text style={styles.PriceItem}>{TotalPriceItemsInCart} $</Text>
               </View>
               <View style={styles.TitleAndPrices}>
                 <Text style={styles.TitleItem}>Delivery Charge</Text>
@@ -199,14 +197,17 @@ export default function Cart() {
                 <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={() => setShowAlert(!showAlert)}
-            >
+            <TouchableOpacity onPress={() => setShowAlert(!showAlert)}>
               <View style={styles.BtnPlaceBuyOrder}>
                 <Text style={styles.TextPMO}>Place My Order</Text>
               </View>
             </TouchableOpacity>
-            <AwesomeAlert show={showAlert} title="thanh cong" message="good chop"></AwesomeAlert>
+            <AwesomeAlert
+              style={styles.AlertAddToCart}
+              show={showAlert}
+              title="thanh cong"
+              message="good chop"
+            ></AwesomeAlert>
           </View>
         </View>
       </View>
@@ -361,9 +362,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "800",
   },
-  // Subtotal: {
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   backgroundColor: "red",
-  // },
+  AlertAddToCart: {
+    backgroundColor: "red"
+  },
 });

@@ -5,70 +5,67 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../screens/Profile";
 import Cart from "../screens/Cart";
 import Chat from "../screens/Chat";
-import BlockHome1 from "../screens/BlockHome1";
-import BlockHome2 from "../screens/BlockHome2";
-import BlockHome3 from "../screens/BlockHome3";
-import Home from "../screens/Home";
-import ChatDetail from "../screens/ChatDetail";
+import Home from "../screens/Home/Home";
+import { HomeStack } from "./StackNavigation";
+import RowComponent from "./Rowcomponent.1";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const HomeStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="BlockHome1"
-        component={BlockHome1}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="BlockHome2"
-        component={BlockHome2}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="BlockHome3"
-        component={BlockHome3}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
-
 
 const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused, size, color }) => {
           let iconName;
-          if (route.name === "Home") {
+          let label;
+          let colors;
+          if (route.name === "MainHome") {
             iconName = focused ? "home" : "home-outline";
+            label = focused ? "Home" : "";
+            colors = "#6B50F6";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
+            label = focused ? "Profile" : "";
+            colors = "#6B50F6";
           } else if (route.name === "Cart") {
             iconName = focused ? "cart" : "cart-outline";
+            label = focused ? "Cart" : "";
+            colors = "#6B50F6";
           } else if (route.name === "Chat") {
             iconName = focused
               ? "chatbubble-ellipses"
               : "chatbubble-ellipses-outline";
+            label = focused ? "Chat" : "";
+            colors = "#6B50F6";
           }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "#6B50F6",
-        tabBarInactiveTintColor: "#b5a7fb",
-        tabBarStyle: {
-          position: "absolute",
-          bottom: 10,
-          marginHorizontal: 60,
-          borderRadius: 20,
-          height: 70,
+
+          return (
+            <View
+              style={{
+                flexDirection: "row",
+                padding: 8,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name={iconName} size={size} color={colors} />
+              <Text style={{ color: colors, fontWeight: 'bold', marginLeft: 10 }}>{label}</Text>
+            </View>
+          );
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="MainHome" component={HomeStack} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Chat" component={Chat} />

@@ -9,24 +9,14 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-export default function Home() {
-  const navigation = useNavigation();
-  const [isBlockHome3Active, setIsBlockHome3Active] = useState(false);
 
-  const handleTextInputClick = () => {
-    if (isBlockHome3Active) {
-      navigation.navigate("BlockHome3");
-      setIsBlockHome3Active(false);
-    } else {
-      navigation.navigate("BlockHome1");
-      setIsBlockHome3Active(true);
-    }
-  };
+const Home = () => {
+  const navigation = useNavigation();
   return (
     <>
       <View style={styles.container}>
         <Image
-          source={require("../assets/images/Pattern.png")}
+          source={require("../../assets/images/Pattern.png")}
           style={styles.ImageCSS}
         ></Image>
         <View style={{ marginLeft: 30 }}>
@@ -64,7 +54,9 @@ export default function Home() {
                 name="options-outline"
                 color={"#6B50F6"}
                 size={30}
-                onPress={handleTextInputClick}
+                onPress={() => {
+                  navigation.navigate("OptionFilter");
+                }}
               ></Ionicons>
             </View>
           </View>
@@ -72,7 +64,8 @@ export default function Home() {
       </View>
     </>
   );
-}
+};
+export default Home;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F8F8FF",

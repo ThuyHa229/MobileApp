@@ -13,32 +13,32 @@ const BlockHome2 = () => {
           </View>
           <View style={styles.restaurant}>
             <View style={styles.rest1}>
-              <Image source={require("../assets/restaurantImage2.png")} />
+              <Image source={require("../../assets/restaurantImage2.png")} />
               <Text style={styles.restName}>Vegan Resto</Text>
               <Text style={styles.restTime}>12 Mins</Text>
             </View>
             <View style={styles.rest2}>
-              <Image source={require("../assets/restaurantImage1.png")} />
+              <Image source={require("../../assets/restaurantImage1.png")} />
               <Text style={styles.restName}>Healthy Food</Text>
               <Text style={styles.restTime}>8 Mins</Text>
             </View>
             <View style={styles.rest1}>
-              <Image source={require("../assets/rest3.png")} />
+              <Image source={require("../../assets/rest3.png")} />
               <Text style={styles.restName}>Good Food</Text>
               <Text style={styles.restTime}>12 Mins</Text>
             </View>
             <View style={styles.rest2}>
-              <Image source={require("../assets/rest4.png")} />
+              <Image source={require("../../assets/rest4.png")} />
               <Text style={styles.restName}>Smart Resto</Text>
               <Text style={styles.restTime}>8 Mins</Text>
             </View>
             <View style={styles.rest1}>
-              <Image source={require("../assets/rest5.png")} />
+              <Image source={require("../../assets/rest5.png")} />
               <Text style={styles.restName}>Vegan Resto</Text>
               <Text style={styles.restTime}>12 Mins</Text>
             </View>
             <View style={styles.rest2}>
-              <Image source={require("../assets/rest6.png")} />
+              <Image source={require("../../assets/rest6.png")} />
               <Text style={styles.restName}>Healthy Food</Text>
               <Text style={styles.restTime}>8 Mins</Text>
             </View>

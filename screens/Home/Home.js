@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,34 +9,39 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-
 const Home = () => {
   const navigation = useNavigation();
+  const conditionNavigation = () => {
+    navigation.navigate("OptionFilter");
+  }
+
   return (
     <>
       <View style={styles.container}>
         <Image
           source={require("../../assets/images/Pattern.png")}
           style={styles.ImageCSS}
-        ></Image>
+        />
         <View style={{ marginLeft: 30 }}>
           <View style={styles.viewtitlehome}>
             <Text style={styles.titleTexthome}>
               Find Your{"\n"}Favorite Food
             </Text>
-            <View style={styles.viewIconNotificationHome}>
-              <Ionicons
-                style={styles.iconnotificationhome}
-                name="notifications-outline"
-                color={"#6B50F6"}
-                size={30}
-              ></Ionicons>
-              <View style={styles.Havenotification}></View>
-            </View>
+            <TouchableOpacity>
+              <View style={styles.viewIconNotificationHome}>
+                <Ionicons
+                  style={styles.iconnotificationhome}
+                  name="notifications-outline"
+                  color={"#6B50F6"}
+                  size={30}
+                ></Ionicons>
+                <View style={styles.Havenotification}></View>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.viewInputHome}>
             <Ionicons
-              style={styles.iconnotificationhome}
+              style={{ position: "absolute", zIndex: 2, marginLeft: 15 }}
               name="search-outline"
               color={"#6B50F6"}
               size={30}
@@ -48,17 +53,17 @@ const Home = () => {
               size={50}
               placeholderTextColor="#bbaefb"
             />
-            <View style={styles.ViewSelectOption}>
-              <Ionicons
-                style={styles.iconnotificationhome}
-                name="options-outline"
-                color={"#6B50F6"}
-                size={30}
-                onPress={() => {
-                  navigation.navigate("OptionFilter");
-                }}
-              ></Ionicons>
-            </View>
+            <TouchableOpacity style={{ marginLeft: 15 }} onPress={conditionNavigation}
+            >
+              <View style={styles.ViewSelectOption}>
+                <Ionicons
+                  style={styles.iconnotificationhome}
+                  name="options-outline"
+                  color={"#6B50F6"}
+                  size={30}
+                ></Ionicons>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -70,18 +75,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F8F8FF",
     height: 220,
+    top: -50
   },
   ImageCSS: {
-    position: "absolute",
-    zIndex: 1,
-    marginLeft: 80,
-    top: -480,
+    height: "430%",
+    width: "430%",
+    marginLeft: -500,
+    marginTop: -630,
     transform: [{ rotate: "10deg" }],
-    left: 60,
-    width: "150%",
+    objectFit: 'contain',
   },
   viewtitlehome: {
-    marginTop: 50,
+    marginTop: -220,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -98,53 +103,44 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 27,
     borderColor: "red",
-    marginRight: 60,
     backgroundColor: "white",
-    zIndex: 2,
-    marginTop: 20,
+    marginRight: 100
   },
   Havenotification: {
-    position: "absolute",
     height: 8,
     width: 8,
     borderRadius: 4,
     backgroundColor: "red",
-    top: 15,
-    right: 23,
-    zIndex: 2,
+    top: -30,
+    left: 5
   },
   viewInputHome: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 45,
   },
   iconnotificationhome: {
-    position: "absolute",
-    zIndex: 1,
-    left: 15,
   },
   searchHome: {
-    width: "80%",
+    width: "60%",
     height: 50,
     backgroundColor: "#f0edfe",
     padding: 10,
     borderRadius: 15,
-    color: "#bbaefb",
+    color: "#6B50F6",
     textAlign: "center",
-    width: "60%",
   },
   ViewSelectOption: {
     width: 57,
     height: 50,
     backgroundColor: "#f0edfe",
+    color: "#6B50F6",
     borderRadius: 15,
-    left: 20,
-    zIndex: 2,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   iconOptionsHome: {
-    zIndex: 2,
     alignSelf: "center",
   },
 });

@@ -28,12 +28,6 @@ const App = () => {
           component={DetailProduct}
           options={{ tabBarShowLabel: true }}
         ></Stack.Screen>
-        <Stack.Screen
-          name="DetailRestaurant"
-          component={DetailRestaurant}
-          options={{ tabBarShowLabel: true }} // Ẩn nhãn của tab
-        ></Stack.Screen>
-        <Stack.Screen name="BlockHome1" component={BlockHome1}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,8 +6,7 @@ import Profile from "../screens/Profile";
 import Cart from "../screens/Cart";
 import Chat from "../screens/Chat";
 import Home from "../screens/Home/Home";
-import { HomeStack } from "./StackNavigation";
-import RowComponent from "./Rowcomponent.1";
+import { HomeStack, ChatStack } from "./StackNavigation";
 import {
   View,
   Text,
@@ -16,6 +15,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +29,7 @@ const Tabs = () => {
           let iconName;
           let label;
           let colors;
-          if (route.name === "MainHome") {
+          if (route.name === "HomeStack") {
             iconName = focused ? "home" : "home-outline";
             label = focused ? "Home" : "";
             colors = "#6B50F6";
@@ -41,7 +41,7 @@ const Tabs = () => {
             iconName = focused ? "cart" : "cart-outline";
             label = focused ? "Cart" : "";
             colors = "#6B50F6";
-          } else if (route.name === "Chat") {
+          } else if (route.name === "ChatStack") {
             iconName = focused
               ? "chatbubble-ellipses"
               : "chatbubble-ellipses-outline";
@@ -65,12 +65,27 @@ const Tabs = () => {
         },
       })}
     >
-      <Tab.Screen name="MainHome" component={HomeStack} />
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeStack}
+        options={({ route }) => ({ tabBarStyle: { display: getRouteName(route) } })} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Cart" component={Cart} />
-      <Tab.Screen name="Chat" component={Chat} />
+      <Tab.Screen
+        name="ChatStack"
+        component={ChatStack}
+        options={({ route }) => ({ tabBarStyle: { display: getRouteName(route) } })} />
+
     </Tab.Navigator>
   );
 };
 
+const getRouteName = route => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (routeName?.includes("OptionFilter") || routeName?.includes("ChatDetail")) {
+    return "none"
+  } else {
+    return "block"
+  }
+}
 export default Tabs;

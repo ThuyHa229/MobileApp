@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const ChatDetail = () => {
+const ChatDetail = ({navigation}) => {
 
     const messages = [
         {
@@ -19,7 +19,11 @@ const ChatDetail = () => {
                     source={require("../assets/images/Pattern.png")}
                     style={styles.ImageCSS}
                 ></Image>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate("Chat")
+                    }}
+                >
                     <View style={styles.ViewBackChat}>
                         <Ionicons
                             style={{ color: "#6B50F6" }}

@@ -82,13 +82,19 @@ export default function Cart() {
   const handleDeleteItem = (id) => {
     const updatedItems = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedItems);
-
-    const newTotalPrice = updatedItems.reduce(
-      (total, item) => total + item.money * item.quantity,
-      0
-    );
-    setTotalPrice(newTotalPrice);
   };
+  
+  useEffect(() => {
+    console.log("cartItems: ", cartItems);
+
+    const newTotalItemsPrices = calculateTotalMoney();
+    setTotalPriceItemsInCart(newTotalItemsPrices);
+
+    const totalDiscount = calculateTotalDiscount();
+    setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
+    console.log("cartItems: ", cartItems);
+
+  }, [cartItems]);
 
   const renderedItems = cartItems.map((item, index) => (
     <View key={index}>

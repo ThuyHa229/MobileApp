@@ -33,10 +33,6 @@ const Chat = () => {
   ];
 
 
-  const handleTextInputClick = () => {
-    navigation.navigate("ChatDetail");
-  };
-
 
   return (
     <>
@@ -45,7 +41,12 @@ const Chat = () => {
           source={require("../assets/images/Pattern.png")}
           style={styles.ImageCSS}
         ></Image>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Home")
+          }}
+
+        >
           <View style={styles.ViewBackChat}>
             <Ionicons
               style={{ color: "#6B50F6" }}
@@ -59,7 +60,10 @@ const Chat = () => {
         {/* khung body tin nhắn */}
         {messages.map((message, index) => (
           <View key={index}>
-            <TouchableOpacity onPress={handleTextInputClick}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ChatDetail")
+              }}>
               <View style={styles.chating} >
                 <View
                   style={{

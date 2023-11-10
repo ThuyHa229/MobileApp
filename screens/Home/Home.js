@@ -9,12 +9,52 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+
+
+
+
+const API_ENDPOIND = "api"
+
+
+
+
+
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setsearchQuery] = useState("");
+  const [data, setData] = useState([]);
+  const [error, setError] = useState([]);
+  const [fullData, setFullData] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchData(API_ENDPOIND);
+  }, []);
+
+  const fetchData = async (url) => {
+    try {
+      const response = await fetch(url)
+      const json = await response.json()
+      console.log(json.results);
+
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    }
+  };
+
+
+
+  const handelSearch = (query) => {
+    setsearchQuery(query);
+
+  };
+
+
   const navigation = useNavigation();
   const conditionNavigation = () => {
     navigation.navigate("OptionFilter");
   }
-
   return (
     <>
       <View style={styles.container}>
@@ -39,7 +79,9 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.viewInputHome}>
+
+          <View style={styles.viewInputHome} >
+          
             <Ionicons
               style={{ position: "absolute", zIndex: 2, marginLeft: 15 }}
               name="search-outline"
@@ -52,9 +94,14 @@ const Home = () => {
               textAlignVertical="center"
               size={50}
               placeholderTextColor="#bbaefb"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={searchQuery}
+              onChange={(query) => handelSearch(query)}
+
             />
-            <TouchableOpacity style={{ marginLeft: 15 }} onPress={conditionNavigation}
-            >
+            
+            <TouchableOpacity style={{ marginLeft: 15 }} onPress={conditionNavigation}>
               <View style={styles.ViewSelectOption}>
                 <Ionicons
                   style={styles.iconnotificationhome}

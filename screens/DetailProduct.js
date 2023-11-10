@@ -47,7 +47,7 @@ const DetailProduct = () => {
               size={24}
               color="black"
               onPress={() => {
-                navigation.navigate("MainHome");
+                navigation.navigate("Home");
               }}
             />
           </View>

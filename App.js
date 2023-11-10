@@ -10,6 +10,7 @@ import Payment from "./screens/Payment";
 import DetailProduct from "./screens/DetailProduct";
 import DetailRestaurant from "./screens/DetailRestaurant";
 import BlockHome1 from "./screens/Home/BlockHome1";
+import Signup from "./screens/Welcome/Signup";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,7 +18,8 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+    <Signup />
+      {/* <Stack.Navigator
         screenOptions={() => ({
           headerShown: false,
         })}
@@ -28,7 +30,7 @@ const App = () => {
           component={DetailProduct}
           options={{ tabBarShowLabel: true }}
         ></Stack.Screen>
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

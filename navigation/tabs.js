@@ -6,7 +6,7 @@ import Profile from "../screens/Profile";
 import Cart from "../screens/Cart";
 import Chat from "../screens/Chat";
 import Home from "../screens/Home/Home";
-import { HomeStack, ChatStack } from "./StackNavigation";
+import { HomeStack, ChatStack, WelcomeStack } from "./StackNavigation";
 import {
   View,
   Text,
@@ -59,7 +59,11 @@ const Tabs = () => {
               }}
             >
               <Ionicons name={iconName} size={size} color={colors} />
-              <Text style={{ color: colors, fontWeight: 'bold', marginLeft: 10 }}>{label}</Text>
+              <Text
+                style={{ color: colors, fontWeight: "bold", marginLeft: 10 }}
+              >
+                {label}
+              </Text>
             </View>
           );
         },
@@ -68,24 +72,34 @@ const Tabs = () => {
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
-        options={({ route }) => ({ tabBarStyle: { display: getRouteName(route) } })} />
+        options={({ route }) => ({
+          tabBarStyle: { display: getRouteName(route) },
+        })}
+      />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen
         name="ChatStack"
         component={ChatStack}
-        options={({ route }) => ({ tabBarStyle: { display: getRouteName(route) } })} />
-
+        options={({ route }) => ({
+          tabBarStyle: { display: getRouteName(route) },
+        })}
+      />
     </Tab.Navigator>
   );
 };
 
-const getRouteName = route => {
+const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  if (routeName?.includes("OptionFilter") || routeName?.includes("ChatDetail")) {
-    return "none"
+  if (
+    routeName?.includes("OptionFilter") ||
+    routeName?.includes("ChatDetail") ||
+    routeName?.includes("WelcomeStack")
+  ) {
+    console.log("routeName: ", routeName);
+    return "none";
   } else {
-    return "block"
+    return "block";
   }
-}
+};
 export default Tabs;

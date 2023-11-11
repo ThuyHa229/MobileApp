@@ -5,12 +5,18 @@ import BlockHome2 from "../screens/Home/BlockHome2";
 import BlockHome3 from "../screens/Home/BlockHome3";
 import ChatDetail from "../screens/ChatDetail";
 import Chat from "../screens/Chat";
+import Login from "../screens/Welcome/Login";
+import Signup from "../screens/Welcome/Signup";
+import Welcome1 from "../screens/Welcome/Welcome1";
+import Welcome2 from "../screens/Welcome/Welcome2";
+import Welcome3 from "../screens/Welcome/Welcome3";
 
 const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="WelcomeStack" component={WelcomeStack} />
       <Stack.Screen name="Home" component={BlockHome1} />
       <Stack.Screen name="DetailRestaurant" component={BlockHome2} />
       <Stack.Screen name="OptionFilter" component={BlockHome3} />
@@ -24,7 +30,19 @@ const ChatStack = () => {
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="ChatDetail" component={ChatDetail} />
     </Stack.Navigator>
-  )
-}
+  );
+};
+
+const WelcomeStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name="Welcome1" component={Welcome1} />
+      <Stack.Screen name="Welcome2" component={Welcome2} />
+      <Stack.Screen name="Welcome3" component={Welcome3} /> */}
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+};
 
 export { HomeStack, ChatStack };

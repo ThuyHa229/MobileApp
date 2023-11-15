@@ -1,27 +1,32 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import React, { useEffect, useState } from "react";
-
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-const API_ENDPOIND = "api"
-
-
+import dishes from "../Data/DataDish";
+import restaurants from "../Data/DataRes";
 const BlockHome3 = () => {
   const filters = [
     {
-      title: 'Type',
-      options: ['Restaurant', 'Menu'],
+      title: "Type",
+      options: ["Restaurant"],
     },
     {
-      title: 'Location',
-      options: ['1 Km', '< 10 Km', '> 10 Km'],
+      title: "Location",
+      options: ["1 Km", "< 10 Km", "> 10 Km"],
     },
     {
-      title: 'Food',
-      options: ['Cake', 'Soup', 'Main Course', 'Appetizer', 'Dessert1    '],
+      title: "Food",
+      options: ["Cake", "Soup", "Main Course", "Appetizer", "Dessert"],
     },
   ];
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setsearchQuery] = useState("");
@@ -29,33 +34,79 @@ const BlockHome3 = () => {
   const [error, setError] = useState([]);
   const [fullData, setFullData] = useState([]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetchData(API_ENDPOIND);
-  }, []);
-
-  const fetchData = async (url) => {
-    try {
-      const response = await fetch(url)
-      const json = await response.json()
-      console.log(json.results);
-
-    } catch (error) {
-      setError(error);
-      console.log(error);
-    }
-  };
-
-
-
-  const handelSearch = (query) => {
-    setsearchQuery(query);
-
-  };
   const navigation = useNavigation();
   const conditionNavigation = () => {
     navigation.navigate("OptionFilter");
-  }
+  };
+
+  // find items when user click option
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  const toggleFilter = (option) => {
+    // Kiểm tra xem lựa chọn đã tồn tại trong mảng chưa
+    const isOptionSelected = selectedOptions.includes(option);
+
+    // Nếu đã chọn, loại bỏ nó khỏi mảng
+    if (isOptionSelected) {
+      const updatedOptions = selectedOptions.filter(
+        (selectedOption) => selectedOption !== option
+      );
+      setSelectedOptions(updatedOptions);
+    } else {
+      // Nếu chưa chọn, thêm nó vào mảng
+      setSelectedOptions([...selectedOptions, option]);
+    }
+  };
+
+  // hidden optio show items
+
+  const [filteredDishes, setFilteredDishes] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+
+  const handleSearch = () => {
+    // tìm tại Dish
+    if (
+      selectedOptions.some((option) =>
+        ["Cake", "Soup", "Main Course", "Appetizer", "Dessert"].includes(option)
+      )
+    ) {
+      const NewDishes = dishes.filter((dish) =>
+        selectedOptions.includes(dish.type)
+      );
+      setFilteredDishes(NewDishes);
+    } else {
+      setFilteredDishes([]);
+    }
+
+    // tìm tại res
+    if (
+      selectedOptions.includes("Restaurant") ||
+      selectedOptions.some((option) =>
+        ["1 Km", "< 10 Km", "> 10 Km"].includes(option)
+      )
+    ) {
+      const NewRestaurants = restaurants.filter((restaurant) => {
+        return (
+          (selectedOptions.includes("Restaurant") &&
+            restaurant.description === "Restaurant") ||
+          selectedOptions.includes(restaurant.location)
+        );
+      });
+      setFilteredRestaurants(NewRestaurants);
+    } else {
+      setFilteredRestaurants([]);
+    }
+    setShowSearchResults(true);
+  };
+
+  useEffect(() => {
+    // Log dữ liệu sau khi state đã được cập nhật
+    console.log("filteredDishes: ", filteredDishes);
+    console.log("filteredRestaurants: ", filteredRestaurants);
+  }, [filteredDishes, filteredRestaurants]);
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -97,25 +148,111 @@ const BlockHome3 = () => {
               autoCorrect={false}
               value={searchQuery}
               onChange={(query) => handelSearch(query)}
-
             />
           </View>
         </View>
       </View>
-      {filters.map((filter, index) => (
-        <View key={index} style={styles.search}>
-          <Text style={styles.titles}>{filter.title}</Text>
-          <View style={styles.blockwords}>
-            {filter.options.map((option, optionIndex) => (
-              <View key={optionIndex} style={styles.totalwords}>
-                <Text style={styles.words}>{option}</Text>
+      <View
+        style={{
+          backgroundColor: "#FFFF",
+          display: showSearchResults ? "none" : "block",
+        }}
+      >
+        {filters.map((filter, index) => (
+          <View key={index} style={styles.search}>
+            <Text style={styles.titles}>{filter.title}</Text>
+            <View style={styles.blockwords}>
+              {filter.options.map((option, optionIndex) => (
+                <TouchableOpacity
+                  key={optionIndex}
+                  style={{
+                    backgroundColor: selectedOptions.includes(option)
+                      ? "#6B50F6"
+                      : "#e5fff0",
+                    ...styles.totalwords,
+                  }}
+                  onPress={() => toggleFilter(option)}
+                >
+                  <Text
+                    style={{
+                      ...styles.words,
+                      color: selectedOptions.includes(option)
+                        ? "white"
+                        : "#6B50F6",
+                    }}
+                  >
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        ))}
+        <TouchableOpacity style={styles.button} onPress={handleSearch}>
+          <Text style={styles.text}>Search</Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          display: showSearchResults ? "block" : "none",
+          alignItems: "center",
+        }}
+      >
+        <View>
+          <Text style={{ marginTop: 20, fontWeight: "800" }}>Dishes:</Text>
+          {filteredDishes.map((dish, index) => (
+            <View style={styles.dish} key={index}>
+              {/* onPress={() => handleAddToApi(dish.id)} */}
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("DetailProduct", {
+                    productId: dish.id,
+                  });
+                }}
+              >
+                <View
+                  style={{
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                    width: 370,
+                  }}
+                >
+                  <Image source={{ uri: dish.image }} style={styles.imageCss} />
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      width: 230,
+                      marginRight: 30,
+                    }}
+                  >
+                    <Text style={styles.namedish}>{dish.name}</Text>
+                    <Text style={styles.descri}>{dish.description}</Text>
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginRight: 20,
+                    }}
+                  >
+                    <Text style={styles.price}>${dish.price}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+
+          <Text style={{ marginTop: 20, fontWeight: "800" }}>Restaurants:</Text>
+          <View style={{ ...styles.restaurantsss, columnGap: 20, marginHorizontal: 30}}>
+            {filteredRestaurants.map((item) => (
+              <View key={item.id} style={styles.rest1}>
+                <Image source={item.image} />
+                <Text style={styles.restName}>{item.name}</Text>
+                <Text style={styles.restTime}>{item.time}</Text>
+                <Text style={styles.restTime}>{item.location}</Text>
               </View>
             ))}
           </View>
         </View>
-      ))}
-      <View style={styles.button}>
-        <Text style={styles.text}>Search</Text>
       </View>
     </ScrollView>
   );
@@ -144,7 +281,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e5fff0",
     width: "auto",
     height: 50,
     borderRadius: 20,
@@ -172,9 +308,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   container: {
-    backgroundColor: "#F8F8FF",
+    backgroundColor: "#FFFF",
     height: 220,
-    top: -50
+    top: -50,
   },
   ImageCSS: {
     height: "430%",
@@ -182,7 +318,7 @@ const styles = StyleSheet.create({
     marginLeft: -500,
     marginTop: -630,
     transform: [{ rotate: "10deg" }],
-    objectFit: 'contain',
+    objectFit: "contain",
   },
   viewtitlehome: {
     marginTop: -220,
@@ -203,7 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 27,
     borderColor: "red",
     backgroundColor: "white",
-    marginRight: 100
+    marginRight: 100,
   },
   Havenotification: {
     height: 8,
@@ -211,15 +347,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "red",
     top: -30,
-    left: 5
+    left: 5,
   },
   viewInputHome: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 45,
   },
-  iconnotificationhome: {
-  },
+  iconnotificationhome: {},
   searchHome: {
     width: "60%",
     height: 50,
@@ -241,5 +376,59 @@ const styles = StyleSheet.create({
   },
   iconOptionsHome: {
     alignSelf: "center",
+  },
+  // css dư lieu da tim mra
+  dish: {
+    marginTop: 30,
+    backgroundColor: "#FFFF",
+    borderRadius: 20,
+    width: 400,
+    height: 87,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageCss: {
+    height: 64,
+    width: 64,
+    borderRadius: 10,
+  },
+  namedish: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  descri: {
+    color: "gray",
+  },
+  price: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#6B50F6",
+    position: "absolute",
+    right: 0,
+  },
+  restaurantsss: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+  },
+  rest1: {
+    width: 150,
+    marginTop: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    width: 180,
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  restName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  restTime: {
+    fontSize: 15,
+    color: "gray",
+    marginTop: 5,
   },
 });

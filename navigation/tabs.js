@@ -92,9 +92,9 @@ const Tabs = () => {
 const getRouteName = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   if (
-    routeName?.includes("OptionFilter") ||
     routeName?.includes("ChatDetail") ||
-    routeName?.includes("WelcomeStack")
+    routeName?.includes("Signup") ||
+    routeName?.includes("Login")
   ) {
     console.log("routeName: ", routeName);
     return "none";

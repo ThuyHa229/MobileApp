@@ -22,7 +22,7 @@ const HomeStack = () => {
       {/* <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Login" component={Login} /> */}
       <Stack.Screen name="Home" component={BlockHome1} />
-      <Stack.Screen name="DetailRestaurant" component={BlockHome2} />
+      <Stack.Screen name="AllRestaurants" component={BlockHome2} />
       <Stack.Screen name="OptionFilter" component={BlockHome3} />
     </Stack.Navigator>
   );

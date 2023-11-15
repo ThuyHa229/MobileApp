@@ -81,7 +81,11 @@ const BlockHome3 = () => {
     }
 
     // tìm tại res
-    if (
+    if (selectedOptions.length == 1 && selectedOptions[0] == "Restaurant") {
+      const NewRestaurants = restaurants
+      setFilteredRestaurants(NewRestaurants);
+    }
+    else if (
       selectedOptions.includes("Restaurant") ||
       selectedOptions.some((option) =>
         ["1 Km", "< 10 Km", "> 10 Km"].includes(option)
@@ -90,22 +94,48 @@ const BlockHome3 = () => {
       const NewRestaurants = restaurants.filter((restaurant) => {
         return (
           (selectedOptions.includes("Restaurant") &&
-            restaurant.description === "Restaurant") ||
-          selectedOptions.includes(restaurant.location)
+            restaurant.desription === "Restaurant") ||
+          (
+            (selectedOptions.includes("1 Km") && restaurant.location === "1 Km") ||
+            (selectedOptions.includes("< 10 Km") && restaurant.location !== "> 10 Km") ||
+            (selectedOptions.includes("> 10 Km") && restaurant.location === "> 10 Km")
+          )
         );
       });
       setFilteredRestaurants(NewRestaurants);
+
+
     } else {
       setFilteredRestaurants([]);
     }
     setShowSearchResults(true);
   };
+  const [matchingResIds, setMatchingResIds] = useState([]);
 
   useEffect(() => {
     // Log dữ liệu sau khi state đã được cập nhật
     console.log("filteredDishes: ", filteredDishes);
     console.log("filteredRestaurants: ", filteredRestaurants);
+
+    const newMatchingResIds = [];
+
+    // Duyệt qua mỗi dish trong filteredDishes
+    for (const filteredDish of filteredDishes) {
+      // Duyệt qua mỗi restaurant trong filteredRestaurants
+      for (const filteredRestaurant of filteredRestaurants) {
+        // So sánh ID_res của dish với ID của restaurant
+        if (filteredDish.id_res === filteredRestaurant.id) {
+          // Nếu trùng khớp, thêm ID của dish vào mảng matchingDishIds
+          newMatchingResIds.push(filteredRestaurant);
+        }
+      }
+    }
+    setMatchingResIds(newMatchingResIds)
   }, [filteredDishes, filteredRestaurants]);
+
+  useEffect(() => {
+    console.log("matchingDishIds: ", matchingResIds);
+  }, [matchingResIds]);
 
   return (
     <ScrollView>
@@ -199,59 +229,90 @@ const BlockHome3 = () => {
         }}
       >
         <View>
-          <Text style={{ marginTop: 20, fontWeight: "800" }}>Dishes:</Text>
-          {filteredDishes.map((dish, index) => (
-            <View style={styles.dish} key={index}>
-              {/* onPress={() => handleAddToApi(dish.id)} */}
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("DetailProduct", {
-                    productId: dish.id,
-                  });
-                }}
-              >
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                    width: 370,
-                  }}
-                >
-                  <Image source={{ uri: dish.image }} style={styles.imageCss} />
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      width: 230,
-                      marginRight: 30,
-                    }}
-                  >
-                    <Text style={styles.namedish}>{dish.name}</Text>
-                    <Text style={styles.descri}>{dish.description}</Text>
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      marginRight: 20,
-                    }}
-                  >
-                    <Text style={styles.price}>${dish.price}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
 
-          <Text style={{ marginTop: 20, fontWeight: "800" }}>Restaurants:</Text>
-          <View style={{ ...styles.restaurantsss, columnGap: 20, marginHorizontal: 30}}>
-            {filteredRestaurants.map((item) => (
-              <View key={item.id} style={styles.rest1}>
-                <Image source={item.image} />
-                <Text style={styles.restName}>{item.name}</Text>
-                <Text style={styles.restTime}>{item.time}</Text>
-                <Text style={styles.restTime}>{item.location}</Text>
+          {matchingResIds.length > 0 ? (
+            <>
+              <Text style={{ marginTop: 20, fontWeight: "800" }}>Restaurants:</Text>
+              <View style={{ ...styles.restaurantsss, columnGap: 20, marginHorizontal: 30 }}>
+                {matchingResIds.length > 0 ? (
+                  matchingResIds.map((item) => (
+                    <View key={item.id} style={styles.rest1}>
+                      <Image source={item.image} />
+                      <Text style={styles.restName}>{item.name}</Text>
+                      <Text style={styles.restTime}>{item.time}</Text>
+                      <Text style={styles.restTime}>{item.location}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text>Không có nhà hàng phù hợp</Text>
+                )}
               </View>
-            ))}
-          </View>
+            </>
+          ) :filteredDishes.length > 0 && filteredRestaurants.length == 0  ? (
+            <>
+              <Text style={{ marginTop: 20, fontWeight: "800" }}>Dishes:</Text>
+              {filteredDishes.map((dish, index) => (
+                <View style={styles.dish} key={index}>
+                  {/* onPress={() => handleAddToApi(dish.id)} */}
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("DetailProduct", {
+                        productId: dish.id,
+                      });
+                    }}
+                  >
+                    <View
+                      style={{
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                        width: 370,
+                      }}
+                    >
+                      <Image source={{ uri: dish.image }} style={styles.imageCss} />
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          width: 230,
+                          marginRight: 30,
+                        }}
+                      >
+                        <Text style={styles.namedish}>{dish.name}</Text>
+                        <Text style={styles.descri}>{dish.description}</Text>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          marginRight: 20,
+                        }}
+                      >
+                        <Text style={styles.price}>${dish.price}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </>
+          ) : filteredRestaurants.length > 0 && filteredDishes.length == 0 ? (
+            <>
+              <Text style={{ marginTop: 20, fontWeight: "800" }}>Restaurants:</Text>
+              <View style={{ ...styles.restaurantsss, columnGap: 20, marginHorizontal: 30 }}>
+                {filteredRestaurants.length > 0 ? (
+                  filteredRestaurants.map((item) => (
+                    <View key={item.id} style={styles.rest1}>
+                      <Image source={item.image} />
+                      <Text style={styles.restName}>{item.name}</Text>
+                      <Text style={styles.restTime}>{item.time}</Text>
+                      <Text style={styles.restTime}>{item.location}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text>Không có nhà hàng phù hợp</Text>
+                )}
+              </View>
+            </>
+          ) : (
+                  <Text>Không có nhà hàng phù hợp</Text>
+          )}
         </View>
       </View>
     </ScrollView>

@@ -7,6 +7,7 @@ const UsersData = [
     location: 0,
   },
 ];
+const Userdb = [{}]
 
 const addUser = (newUser) => {
   UsersData.push(newUser);

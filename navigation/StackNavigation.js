@@ -10,6 +10,9 @@ import Signup from "../screens/Welcome/Signup";
 import Welcome1 from "../screens/Welcome/Welcome1";
 import Welcome2 from "../screens/Welcome/Welcome2";
 import Welcome3 from "../screens/Welcome/Welcome3";
+import EditProfile from "../screens/EditProfile";
+import EditPreview from "../screens/EditPreview";
+import SetLocation from "../screens/SetLocation";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,10 +46,19 @@ const WelcomeStack = () => {
       {/* <Stack.Screen name="Welcome1" component={Welcome1} />
       <Stack.Screen name="Welcome2" component={Welcome2} />
       <Stack.Screen name="Welcome3" component={Welcome3} /> */}
-      <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Login" component={Login} />
+      {/* <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Login" component={Login} /> */}
+    </Stack.Navigator>
+  );
+};
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="EditPreview" component={EditPreview} />
+      <Stack.Screen name="SetLocation" component={SetLocation} />
     </Stack.Navigator>
   );
 };
 
-export { HomeStack, ChatStack };
+export { HomeStack, ChatStack, ProfileStack };

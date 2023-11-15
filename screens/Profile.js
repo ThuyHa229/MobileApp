@@ -1,39 +1,21 @@
-import { View, Image, ScrollView, StyleSheet, Text } from "react-native";
-import {React , useState, useEffect} from "react";
+import {
+  View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { React } from "react";
+import { UsersData } from "./Data/UserData";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  useEffect(() => {
-    setUserId(userId);
-
-    const fetchData = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        const response = await fetch(
-          `https://654dfab8cbc3253557422fdf.mockapi.io/Users/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    if (userId) {
-      fetchData();
-    }
-  }, [userId]);
-
+  const userData = UsersData;
+  const navigation = useNavigation();
+  const handleNextButtonClick = () => {
+    navigation.navigate("EditProfile");
+  };
   const data = [
     {
       image: require("../assets/favomenu.png"),
@@ -72,17 +54,21 @@ export default function Profile() {
               <Text style={styles.rank}>Member Gold</Text>
             </View>
             <View style={styles.viewinfo}>
+              {userData.map((user, index) => (
+                <View key={index}>
+                  <Text style={styles.name}>{user.username}</Text>
+                  <Text style={styles.email}>{user.email}</Text>
+                </View>
+              ))}
               <View>
-                <Text style={styles.name}>{userData?.username}</Text>
-                <Text style={styles.email}>{userData?.email}</Text>
-              </View>
-              <View>
-                <Image
-                  source={require("../assets/edit.png")}
-                  style={{
-                    marginRight: 50,
-                  }}
-                />
+                <TouchableOpacity onPress={handleNextButtonClick}>
+                  <Image
+                    source={require("../assets/edit.png")}
+                    style={{
+                      marginRight: 50,
+                    }}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
             <View

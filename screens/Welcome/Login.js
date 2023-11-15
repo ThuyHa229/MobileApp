@@ -3,19 +3,28 @@ import {
   Text,
   Image,
   TextInput,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addUser } from "../Data/UserData";
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
+      if (!email) {
+        Alert.alert("Error", "Please enter your email");
+        return;
+      }
+  
+      if (!password) {
+        Alert.alert("Error", "Please enter your password");
+        return;
+      }
       const response = await fetch(
         "https://654dfab8cbc3253557422fdf.mockapi.io/Users",
         {
@@ -26,15 +35,13 @@ const Login = ({ navigation }) => {
         }
       );
       const data = await response.json();
-      console.log("dataUser: ", data);
       const user = data.find((user) => user.email === email);
+      addUser(user);
       if (user && user.password === password) {
-        AsyncStorage.setItem("accessToken", user.accessToken);
         Alert.alert("Success", "Account login successfully!", [
           {
             text: "OK",
             onPress: () => {
-              // Chuyển hướng đến màn hình đăng nhập
               navigation.navigate("Home");
             },
           },
@@ -80,7 +87,6 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
         <View>
-          {/* Ô input cho Email */}
           <TextInput
             placeholder="Email"
             style={{
@@ -97,7 +103,6 @@ const Login = ({ navigation }) => {
             value={email}
             onChangeText={(text) => setEmail(text)}
           />
-          {/* Ô input cho Password */}
           <TextInput
             placeholder="Password"
             secureTextEntry={true}
@@ -211,6 +216,4 @@ const Login = ({ navigation }) => {
     </ScrollView>
   );
 };
-
 export default Login;
-const styles = StyleSheet.create({});

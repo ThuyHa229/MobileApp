@@ -1,7 +1,11 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-
+import { useNavigation } from "@react-navigation/native";
 const Welcome2 = () => {
+  const navigation = useNavigation();
+  const handleNextButtonClick = () => {
+    navigation.navigate("Welcome3");
+  };
   return (
     <>
       <View>
@@ -68,35 +72,41 @@ const Welcome2 = () => {
             Find your Comfort{"\n"} Food here
           </Text>
           <Text
-            style={{ fontSize: 15, textAlign: "center", marginTop: 50, color: "gray" }}
+            style={{
+              fontSize: 15,
+              textAlign: "center",
+              marginTop: 50,
+              color: "gray",
+            }}
           >
             Here You Can find a chef or dish for every {"\n"} taste and
             color.Enjoy!
           </Text>
         </View>
         <View
-            style={{
-                width: "40%",
-                height: 65,
-                backgroundColor: "#6B50F6",
-                left: 150,
-                top: 50,
-                borderRadius: 20,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems:"center",
-
-            }}
+          style={{
+            width: "40%",
+            height: 65,
+            backgroundColor: "#6B50F6",
+            left: 150,
+            top: 50,
+            borderRadius: 20,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
+          <TouchableOpacity onPress={handleNextButtonClick}>
             <Text
-                style={{
-                    fontSize: 18,
-                    color: "#ffff",
-                    fontWeight: "bold"
-                }}
+              style={{
+                fontSize: 18,
+                color: "#ffff",
+                fontWeight: "bold",
+              }}
             >
-            Next
+              Next
             </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>

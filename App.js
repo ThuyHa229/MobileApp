@@ -12,13 +12,18 @@ import DetailRestaurant from "./screens/DetailRestaurant";
 import BlockHome1 from "./screens/Home/BlockHome1";
 import Signup from "./screens/Welcome/Signup";
 import Login from "./screens/Welcome/Login";
-import { WelcomeStack } from "./navigation/StackNavigation";
+import { ProfileStack } from "./navigation/StackNavigation";
+import EditProfile from "./screens/EditProfile";
+import EditPreview from "./screens/EditPreview";
+import SetLocation from "./screens/SetLocation";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
+    {/* <EditProfile /> */}
+    {/* <EditPreview /> */}
       <Stack.Navigator
         screenOptions={() => ({
           headerShown: false,
@@ -30,6 +35,9 @@ const App = () => {
           component={DetailProduct}
           options={{ tabBarShowLabel: true }}
         ></Stack.Screen>
+        <Stack.Screen name="EditProfile" component={ProfileStack} />
+        <Stack.Screen name="EditPreview" component={EditPreview} />
+        <Stack.Screen name="SetLocation" component={SetLocation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +29,7 @@ const Login = ({ navigation }) => {
       console.log("dataUser: ", data);
       const user = data.find((user) => user.email === email);
       if (user && user.password === password) {
+        AsyncStorage.setItem("accessToken", user.accessToken);
         Alert.alert("Success", "Account login successfully!", [
           {
             text: "OK",

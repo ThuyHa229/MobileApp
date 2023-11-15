@@ -1,7 +1,39 @@
 import { View, Image, ScrollView, StyleSheet, Text } from "react-native";
-import React from "react";
+import {React , useState, useEffect} from "react";
 
 export default function Profile() {
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    setUserId(userId);
+
+    const fetchData = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        const response = await fetch(
+          `https://654dfab8cbc3253557422fdf.mockapi.io/Users/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    if (userId) {
+      fetchData();
+    }
+  }, [userId]);
+
   const data = [
     {
       image: require("../assets/favomenu.png"),
@@ -41,8 +73,8 @@ export default function Profile() {
             </View>
             <View style={styles.viewinfo}>
               <View>
-                <Text style={styles.name}>Arash Ranjbaran</Text>
-                <Text style={styles.email}>awdesign.ar@gmail.com</Text>
+                <Text style={styles.name}>{userData?.username}</Text>
+                <Text style={styles.email}>{userData?.email}</Text>
               </View>
               <View>
                 <Image
@@ -80,10 +112,7 @@ export default function Profile() {
           <View>
             {data.map((food, index) => (
               <View key={index} style={styles.favomenu}>
-                <Image
-                  style={styles.imgfavo}
-                  source={food.image}
-                />
+                <Image style={styles.imgfavo} source={food.image} />
                 <View style={styles.desfavo}>
                   <Text style={{ fontSize: 15, fontWeight: "600" }}>
                     {food.name}

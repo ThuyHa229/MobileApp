@@ -47,10 +47,10 @@ export default function Cart() {
     },
   ];
 
+  
   const [cartItems, setCartItems] = useState(initialCartItems);
 
-  const [totalPrice, setTotalPrice] = useState(35);
-
+  //
   const handleDecreaseQuantity = (id) => {
     const updatedItems = [...cartItems];
     const itemIndex = updatedItems.findIndex((item) => item.id === id);
@@ -62,7 +62,7 @@ export default function Cart() {
       setTotalPriceItemsInCart(newTotalItemsPrices);
       const totalDiscount = calculateTotalDiscount();
       setTotalPricesInCart(
-        newTotalItemsPrices - DeliveryCharge + totalDiscount
+        newTotalItemsPrices + DeliveryCharge - totalDiscount
       );
     }
   };
@@ -76,25 +76,48 @@ export default function Cart() {
     const newTotalItemsPrices = calculateTotalMoney();
     setTotalPriceItemsInCart(newTotalItemsPrices);
     const totalDiscount = calculateTotalDiscount();
-    setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
+    setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
   };
 
   const handleDeleteItem = (id) => {
     const updatedItems = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedItems);
   };
-  
-  useEffect(() => {
-    console.log("cartItems: ", cartItems);
 
+  useEffect(() => {
+    if (cartItems.length == 0) {
+      setDeliveryCharge(0);
+    } else {
+      setDeliveryCharge(30);
+    }
     const newTotalItemsPrices = calculateTotalMoney();
     setTotalPriceItemsInCart(newTotalItemsPrices);
 
     const totalDiscount = calculateTotalDiscount();
-    setTotalPricesInCart(newTotalItemsPrices - DeliveryCharge + totalDiscount);
+    setTotalDiscountItemsInCart(totalDiscount);
+    setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
     console.log("cartItems: ", cartItems);
-
   }, [cartItems]);
+
+  const calculateTotalMoney = () => {
+    return cartItems.reduce((acc, item) => acc + item.money * item.quantity, 0);
+  };
+  const calculateTotalDiscount = () => {
+    return cartItems.reduce((acc, item) => acc + item.discount, 0);
+  };
+
+  const FirstTotalPrices = () => {
+    const totalMoney = calculateTotalMoney();
+    const totalDiscount = calculateTotalDiscount();
+    return totalMoney + totalDiscount - DeliveryCharge;
+  };
+
+  const [DeliveryCharge, setDeliveryCharge] = useState();
+  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] = useState(calculateTotalMoney);
+  const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
+    calculateTotalDiscount
+  );
+  const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
 
   const renderedItems = cartItems.map((item, index) => (
     <View key={index}>
@@ -145,26 +168,6 @@ export default function Cart() {
       </View>
     </View>
   ));
-
-  const calculateTotalMoney = () => {
-    return cartItems.reduce((acc, item) => acc + item.money * item.quantity, 0);
-  };
-  const calculateTotalDiscount = () => {
-    return cartItems.reduce((acc, item) => acc + item.discount, 0);
-  };
-  const DeliveryCharge = 30;
-  const FirstTotalPrices = () => {
-    const totalMoney = calculateTotalMoney();
-    const totalDiscount = calculateTotalDiscount();
-    return totalMoney + totalDiscount - DeliveryCharge;
-  };
-
-  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] =
-    useState(calculateTotalMoney);
-  const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
-    calculateTotalDiscount
-  );
-  const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
   return (
     <>
       <View style={styles.container}>
@@ -369,6 +372,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   AlertAddToCart: {
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
 });

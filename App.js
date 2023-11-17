@@ -16,6 +16,14 @@ import { ProfileStack } from "./navigation/StackNavigation";
 import EditProfile from "./screens/EditProfile";
 import EditPreview from "./screens/EditPreview";
 import SetLocation from "./screens/SetLocation";
+import SigupSuccess from "./screens/Welcome/SigupSuccess";
+import CallRinging from "./screens/CallRinging";
+import Call from "./screens/Call";
+import FinishOrder from "./screens/FinishOrder";
+import RateFood from "./screens/RateFood";
+import RateRestaurant from "./screens/RateRestaurant";
+import Voucher from "./screens/Voucher";
+import Notification from "./screens/Notification";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +32,15 @@ const App = () => {
     <NavigationContainer>
     {/* <EditProfile /> */}
     {/* <EditPreview /> */}
-      <Stack.Navigator
+    {/* <SigupSuccess /> */}
+    {/* <CallRinging /> */}
+    {/* <Call /> */}
+    {/* <FinishOrder /> */}
+    {/* <RateFood /> */}
+    {/* <RateRestaurant /> */}
+    {/* <Voucher /> */}
+    <Notification />
+      {/* <Stack.Navigator
         screenOptions={() => ({
           headerShown: false,
         })}
@@ -38,7 +54,7 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={ProfileStack} />
         <Stack.Screen name="EditPreview" component={EditPreview} />
         <Stack.Screen name="SetLocation" component={SetLocation} />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

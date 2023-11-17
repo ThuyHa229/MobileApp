@@ -42,13 +42,14 @@ const SetLocation = () => {
       </View>
       <View
         style={{
-          height: 200,
+          height: 150,
           width: 400,
-          backgroundColor: "red",
+          backgroundColor: "white",
           marginLeft: 40,
           marginTop: 50,
           flexDirection: "row",
           justifyContent: "space-between",
+          borderRadius: 15
         }}
       >
         <Image
@@ -60,17 +61,30 @@ const SetLocation = () => {
         />
         <Text
           style={{
-            left: -245,
+            left: -235,
             marginTop: 25,
-            fontSize: 15,
+            fontSize: 16,
           }}
         >
           Your Location
         </Text>
       </View>
+      <View style={{
+        height: 50,
+        width: 350,
+        borderRadius: 10,
+        backgroundColor :"#F8F8FF",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 70,
+        marginTop: -60
+      }}>
+        <Text style={{fontSize: 16}}>Set Location</Text>
+      </View>
       <View
         style={{
-          marginTop: 120,
+          marginTop: 320,
           width: "40%",
           height: 65,
           backgroundColor: "#6B50F6",

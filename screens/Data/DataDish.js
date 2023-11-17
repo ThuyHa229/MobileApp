@@ -40,7 +40,7 @@ const dishes = [
     description: "Warung Resto",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 2,
     type: "Cake",
   },
   {
@@ -51,7 +51,7 @@ const dishes = [
     description: "cake abc2",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 4,
     type: "Cake",
   },
   {
@@ -62,7 +62,7 @@ const dishes = [
     description: "Appetizer Meatballs",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 5,
     type: "Appetizer",
   },
   {
@@ -73,7 +73,7 @@ const dishes = [
     description: "Egg Salad Appetizers",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 5,
     type: "Appetizer",
   },
   {
@@ -84,7 +84,7 @@ const dishes = [
     description: "Croquembouche Profiterole",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 6,
     type: "Dessert",
   },
   {
@@ -95,7 +95,7 @@ const dishes = [
     description: "Dau Desserts",
     price: 7,
     discount: 2,
-    id_res: 1,
+    id_res: 6,
     type: "Dessert",
   },
 ];

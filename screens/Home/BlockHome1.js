@@ -55,7 +55,7 @@ const BlockHome1 = ({ navigation }) => {
                 <Text
                   style={styles.viewmore}
                   onPress={() => {
-                    navigation.navigate("DetailRestaurant");
+                    navigation.navigate("AllRestaurants");
                   }}
                 >
                   View More

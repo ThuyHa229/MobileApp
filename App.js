@@ -30,17 +30,17 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-    {/* <EditProfile /> */}
-    {/* <EditPreview /> */}
-    {/* <SigupSuccess /> */}
-    {/* <CallRinging /> */}
-    {/* <Call /> */}
-    {/* <FinishOrder /> */}
-    {/* <RateFood /> */}
-    {/* <RateRestaurant /> */}
-    {/* <Voucher /> */}
-    <Notification />
-      {/* <Stack.Navigator
+      {/* <EditProfile /> */}
+      {/* <EditPreview /> */}
+      {/* <SigupSuccess /> */}
+      {/* <CallRinging /> */}
+      {/* <Call /> */}
+      {/* <FinishOrder /> */}
+      {/* <RateFood /> */}
+      {/* <RateRestaurant /> */}
+      {/* <Voucher /> */}
+      {/* <Notification /> */}
+      <Stack.Navigator
         screenOptions={() => ({
           headerShown: false,
         })}
@@ -54,7 +54,7 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={ProfileStack} />
         <Stack.Screen name="EditPreview" component={EditPreview} />
         <Stack.Screen name="SetLocation" component={SetLocation} />
-      </Stack.Navigator> */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

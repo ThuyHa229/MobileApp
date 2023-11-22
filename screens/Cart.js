@@ -11,8 +11,38 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import OrderDetails from "./OrderDetails";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AwesomeAlert from "react-native-awesome-alerts";
+import { UsersData } from "./Data/UserData";
+import dishes from "./Data/DataDish";
+import { NewCartData } from "./Data/DataCart";
 
-export default function Cart() {
+
+
+const Cart = () => {
+
+  console.log("NewCartData: ", NewCartData);
+
+  // State để lưu trữ kết quả cuối cùng
+  const [resultArray, setResultArray] = useState([]);
+
+  useEffect(() => {
+    // Hàm xử lý khi mảng thay đổi
+    const mergeArrays = () => {
+      // Lọc các đối tượng từ mảng B có ID tương ứng với các phần tử trong mảng A
+      const filteredArrayB = dishes.filter((itemB) =>
+        NewCartData.some((itemA) => itemA.id_dish === itemB.id)
+      );
+
+      // Lưu kết quả vào state
+      setResultArray(filteredArrayB);
+    };
+
+    // Gọi hàm xử lý khi component mount hoặc khi mảng thay đổi
+    mergeArrays();
+  }, [NewCartData, dishes]);
+
+
+  console.log("resultArray: ", resultArray);
+
   const route = useRoute();
   const [showAlert, setShowAlert] = useState(false);
   const navigation = useNavigation();
@@ -47,7 +77,7 @@ export default function Cart() {
     },
   ];
 
-  
+
   const [cartItems, setCartItems] = useState(initialCartItems);
 
   //
@@ -223,7 +253,7 @@ export default function Cart() {
     </>
   );
 }
-
+export default Cart;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f5f6fe",

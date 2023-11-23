@@ -13,6 +13,7 @@ import dishes from "./Data/DataDish";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UsersData } from "./Data/UserData";
 import { addCart, NewCartData } from "./Data/DataCart";
+import { GetCardAPI } from "./functions/GetCard";
 
 const DetailProduct = () => {
   const route = useRoute();
@@ -22,12 +23,7 @@ const DetailProduct = () => {
 
   const handleAddToCart = async (id) => {
     const id_dish = parseInt(id);
-    const id_user = parseInt(UsersData[0].id)
-
-    console.log("UsersData: ", UsersData);
-    console.log("id_user: ", id_user);
-    console.log("id_dish: ", id_dish);
-
+    const id_user = parseInt(UsersData[0].id);
     try {
       const response = await fetch(
         "https://63aa9d20fdc006ba6046fffd.mockapi.io/Storyfinal",
@@ -39,7 +35,9 @@ const DetailProduct = () => {
         }
       );
       const data = await response.json();
-      const CartData = data.find((cart) => cart.id_user === id_user && cart.id_dish === id_dish);
+      const CartData = data.find(
+        (cart) => cart.id_user === id_user && cart.id_dish === id_dish
+      );
       // true run method put
       if (CartData) {
         console.log("CartData in chua update: ", CartData);
@@ -57,30 +55,8 @@ const DetailProduct = () => {
               }),
             }
           );
-          CartData.quantity = parsedQuantity;
           const updateData = await updateResponse.json();
-          addCart(CartData);
           if (updateResponse.ok) {
-            try {
-              const response = await fetch(
-                "https://63aa9d20fdc006ba6046fffd.mockapi.io/Storyfinal",
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-              const data = await response.json();
-              const cartDataArray = data.filter((cart) => cart.id_user === id_user);
-              if (cartDataArray) {
-                NewCartData.length = 0;
-                addCart(cartDataArray)
-                console.log("NewCartData123: ", NewCartData);
-              }
-            } catch (error) {
-              console.error("Lỗi:", error);
-            }
             Alert.alert(
               "Success!",
               "Item has been added to your cart.",
@@ -94,7 +70,10 @@ const DetailProduct = () => {
               { cancelable: false }
             );
           } else {
-            console.error("Lỗi khi cập nhật quantity trên server:", updateData.message || "Something went wrong");
+            console.error(
+              "Lỗi khi cập nhật quantity trên server:",
+              updateData.message || "Something went wrong"
+            );
             Alert.alert("Error", data.message || "Something went wrong");
           }
         } catch (error) {
@@ -108,17 +87,17 @@ const DetailProduct = () => {
           const response = await fetch(
             "https://63aa9d20fdc006ba6046fffd.mockapi.io/Storyfinal",
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
               },
               body: JSON.stringify({
                 id_dish,
                 id_user,
-                quantity
-              })
+                quantity,
+              }),
             }
-          )
+          );
           const data = await response.json();
           if (response.ok) {
             Alert.alert(
@@ -139,12 +118,14 @@ const DetailProduct = () => {
         } catch (error) {
           console.log("error: ", error);
           Alert.alert("Error", "Something went wrong. Please try again later.");
-        };
+        }
       }
+      // khi đẩy xong thì get lần nữa lấy tất cả dữ liệu về
+      GetCardAPI();
     } catch (error) {
       console.error("Lỗi:", error);
     }
-  }
+  };
   return (
     <ScrollView>
       <View style={styles.HomeBody}>

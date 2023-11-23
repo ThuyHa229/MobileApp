@@ -15,33 +15,30 @@ import { UsersData } from "./Data/UserData";
 import dishes from "./Data/DataDish";
 import { NewCartData } from "./Data/DataCart";
 
-
-
 const Cart = () => {
+  console.log("NewCartData1111111: ", NewCartData);
+  const createNewArray = () => {
+    const newArray = [];
+    NewCartData.forEach((itemA) => {
+      const matchingItemB = dishes.find((itemB) => itemA.id_dish === itemB.id);
+      if (matchingItemB) {
+        newArray.push({
+          id: matchingItemB.id,
+          quantity: itemA.quantity,
+          name: matchingItemB.name,
+          image: matchingItemB.image,
+          description: matchingItemB.description,
+          price: matchingItemB.price,
+          discount: matchingItemB.discount,
+        });
+      }
+    });
 
-  console.log("NewCartData: ", NewCartData);
+    return newArray;
+  };
 
-  // State để lưu trữ kết quả cuối cùng
-  const [resultArray, setResultArray] = useState([]);
-
-  useEffect(() => {
-    // Hàm xử lý khi mảng thay đổi
-    const mergeArrays = () => {
-      // Lọc các đối tượng từ mảng B có ID tương ứng với các phần tử trong mảng A
-      const filteredArrayB = dishes.filter((itemB) =>
-        NewCartData.some((itemA) => itemA.id_dish === itemB.id)
-      );
-
-      // Lưu kết quả vào state
-      setResultArray(filteredArrayB);
-    };
-
-    // Gọi hàm xử lý khi component mount hoặc khi mảng thay đổi
-    mergeArrays();
-  }, [NewCartData, dishes]);
-
-
-  console.log("resultArray: ", resultArray);
+  // Gọi hàm và in mảng mới
+  const resultArray = createNewArray();
 
   const route = useRoute();
   const [showAlert, setShowAlert] = useState(false);
@@ -77,8 +74,8 @@ const Cart = () => {
     },
   ];
 
-
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cartItems, setCartItems] = useState(resultArray);
+  console.log("cartItems: ", cartItems);
 
   //
   const handleDecreaseQuantity = (id) => {
@@ -130,20 +127,21 @@ const Cart = () => {
   }, [cartItems]);
 
   const calculateTotalMoney = () => {
-    return cartItems.reduce((acc, item) => acc + item.money * item.quantity, 0);
+    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
   const calculateTotalDiscount = () => {
     return cartItems.reduce((acc, item) => acc + item.discount, 0);
   };
 
   const FirstTotalPrices = () => {
-    const totalMoney = calculateTotalMoney();
+    const totalMoney =  calculateTotalMoney();
     const totalDiscount = calculateTotalDiscount();
     return totalMoney + totalDiscount - DeliveryCharge;
   };
 
   const [DeliveryCharge, setDeliveryCharge] = useState();
-  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] = useState(calculateTotalMoney);
+  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] =
+    useState(calculateTotalMoney);
   const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
     calculateTotalDiscount
   );
@@ -153,12 +151,12 @@ const Cart = () => {
     <View key={index}>
       <View style={styles.chating}>
         <View style={styles.photoProfile}>
-          <Image source={item.profileImage} style={styles.photoProfile} />
+          <Image source={{ uri: item.image }} style={styles.photoProfile} />
         </View>
         <View style={styles.NameAndNotification}>
           <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
           <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
-            {item.message}
+            {item.description}
           </Text>
           <Text
             style={{
@@ -168,7 +166,7 @@ const Cart = () => {
               fontWeight: "900",
             }}
           >
-            $ {item.money}
+            $ {item.price}
           </Text>
         </View>
         <View
@@ -252,7 +250,7 @@ const Cart = () => {
       </View>
     </>
   );
-}
+};
 export default Cart;
 const styles = StyleSheet.create({
   container: {

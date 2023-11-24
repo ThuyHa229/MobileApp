@@ -1,10 +1,14 @@
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import restaurants from "./Data/DataRes";
 
-const DetailRestaurant = () => {
-  const navigate = useNavigation();
+const DetailRestaurant = ({ navigation }) => {
+  const route = useRoute();
+  const { RestaurantId } = route.params;
+  const selectedRes = restaurants.find((res) => res.id === RestaurantId);
+
   const dishes = [
     {
       image: require("../assets/pizza.png"),
@@ -35,7 +39,7 @@ const DetailRestaurant = () => {
             size={24}
             color="black"
             onPress={() => {
-              navigate.push("BlockHome1");
+              navigation.navigate("Home");
             }}
           />
         </View>
@@ -83,7 +87,7 @@ const DetailRestaurant = () => {
             </View>
           </View>
           <View>
-            <Text style={styles.name}> WiJie Bar and Restro</Text>
+            <Text style={styles.name}> {selectedRes.name}</Text>
           </View>
           <View
             style={{
@@ -99,7 +103,7 @@ const DetailRestaurant = () => {
                 marginLeft: 25,
               }}
             />
-            <Text style={styles.rate}>19 Km</Text>
+            <Text style={styles.rate}> {selectedRes.location}</Text>
             <Image
               source={require("../assets/iconstar.png")}
               style={{

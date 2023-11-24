@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
-const PaymentMethod = () => {
+const SignupProcess = ({ navigation }) => {
     return (
         <View>
             <Image
-                source={require("../assets/images/Pattern.png")}
+                source={require("../../assets/images/Pattern.png")}
                 style={{
                     position: "absolute",
                     marginLeft: 80,
@@ -31,22 +31,37 @@ const PaymentMethod = () => {
                         fontWeight: "bold",
                     }}
                 >
-                    Payment Method
+                    Fill in your bio to get {'\n'}started
                 </Text>
                 <View style={styles.button}>
                     <Text style={styles.rank}>This data will be displayed in your account {'\n'}profile for security</Text>
                 </View>
-                <View style={styles.method}>
-                    <Image style={{ marginLeft: 20 }} source={require("../assets/paypal.png")} />
-                </View>
-                <View style={styles.method}>
-                    <Image style={{ marginLeft: 20 }} source={require("../assets/visa.png")} />
-                </View>
-                <View style={styles.method}>
-                    <Image style={{ marginLeft: 20 }} source={require("../assets/payoneer.png")} />
-                </View>
-                
-                <TouchableOpacity style={styles.Button} >
+                <TextInput
+                    style={styles.input}
+                    placeholder="First Name"
+                    placeholderTextColor="#8E9098"
+                    secureTextEntry
+                    onChangeText={(text) => setPassword(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Last Name"
+                    placeholderTextColor="#8E9098"
+                    secureTextEntry
+                    onChangeText={(text) => setPassword(text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Mobile Number"
+                    placeholderTextColor="#8E9098"
+                    secureTextEntry
+                    onChangeText={(text) => setPassword(text)}
+                />
+                <TouchableOpacity style={styles.Button}
+                    onPress={() =>{
+                        navigation.navigate("PaymentMethod")
+                    }}
+                >
                     <Text style={styles.ButtonText}>Next</Text>
                 </TouchableOpacity>
 
@@ -55,7 +70,7 @@ const PaymentMethod = () => {
     );
 };
 
-export default PaymentMethod;
+export default SignupProcess;
 const styles = StyleSheet.create({
     ViewBackChat: {
         height: 45,
@@ -76,17 +91,18 @@ const styles = StyleSheet.create({
         marginTop: 20,
 
     },
-    method: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
+    input: {
+        width: 300,
+        height: 70,
+        borderColor: '#ffffff',
         backgroundColor: "#F8F8FF",
-        borderRadius: 20,
+        borderWidth: 1,
+        marginBottom: 5,
+        paddingLeft: 10,
+        borderRadius: 15,
         marginTop: 10,
-        width: "93%",
-        height: 80,
+
     },
-    
     Button: {
         backgroundColor: '#6b50f6',
         borderRadius: 15,

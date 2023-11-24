@@ -46,7 +46,7 @@ const Signup = () => {
             text: "OK",
             onPress: () => {
               // Navigate to the login screen
-              navigation.navigate("Login"); // Assuming 'Login' is the name of your login screen
+              navigation.navigate("SignupProcess"); // Assuming 'Login' is the name of your login screen
             },
           },
         ]);

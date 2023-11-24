@@ -6,12 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 const SetLocation = () => {
   const navigation = useNavigation();
   const handleNextButtonClick = () => {
-    navigation.navigate("SetLocation");
+    navigation.navigate("SigupSuccess");
   };
   return (
     <View>
       <Image
-        source={require("../assets/images/Pattern.png")}
+        source={require("../../assets/images/Pattern.png")}
         style={styles.ImageCSS}
       ></Image>
       <TouchableOpacity
@@ -53,7 +53,7 @@ const SetLocation = () => {
         }}
       >
         <Image
-          source={require("../assets/images/locationLogo.png")}
+          source={require("../../assets/images/locationLogo.png")}
           style={{
             marginTop: 20,
             marginLeft: 20,

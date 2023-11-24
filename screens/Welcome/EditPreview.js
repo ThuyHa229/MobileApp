@@ -11,7 +11,7 @@ const EditPreview = () => {
   return (
     <View>
     <Image
-      source={require("../assets/images/Pattern.png")}
+      source={require("../../assets/images/Pattern.png")}
       style={styles.ImageCSS}
     ></Image>
     <TouchableOpacity
@@ -41,7 +41,7 @@ const EditPreview = () => {
       </Text>
     </View>
     <View>
-        <Image source={require('../assets/photoprofile.png')}
+        <Image source={require('../../assets/photoprofile.png')}
             style={{
                 borderRadius: 20,
                 marginTop: 60,

@@ -9,18 +9,21 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { addUser } from "../Data/UserData";
+import { GetCardAPI } from "../../functions/GetCard";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const handleSignup = () => {
+    navigation.navigate("Signup");
+  };
   const handleLogin = async () => {
     try {
       if (!email) {
         Alert.alert("Error", "Please enter your email");
         return;
       }
-  
+
       if (!password) {
         Alert.alert("Error", "Please enter your password");
         return;
@@ -38,6 +41,7 @@ const Login = ({ navigation }) => {
       const user = data.find((user) => user.email === email);
       addUser(user);
       if (user && user.password === password) {
+        GetCardAPI();
         Alert.alert("Success", "Account login successfully!", [
           {
             text: "OK",
@@ -46,7 +50,6 @@ const Login = ({ navigation }) => {
             },
           },
         ]);
-        navigation.navigate("Home");
       } else {
         alert("Invalid email or password. Please try again.");
       }
@@ -187,6 +190,19 @@ const Login = ({ navigation }) => {
           >
             Forgot Your Password
           </Text>
+          <TouchableOpacity onPress={handleSignup}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: "#6B50F6",
+                textDecorationLine: "underline",
+              }}
+            >
+              Don't have any account?
+            </Text>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={handleLogin}

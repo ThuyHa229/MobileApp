@@ -26,7 +26,7 @@ const OrderDetails = ({
               size={24}
               color="black"
               onPress={()=>{
-                navigate.push("BlockHome1")
+                navigate.navigate("Home")
               }}
             />
           </View>

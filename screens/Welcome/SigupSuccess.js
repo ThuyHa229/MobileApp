@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 const SigupSuccess = () => {
     const navigation = useNavigation();
     const handleNextButtonClick = () => {
-      navigation.navigate("OrderDetail");
+      navigation.navigate("Home");
     };
   return (
     <View>

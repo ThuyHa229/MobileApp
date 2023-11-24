@@ -94,7 +94,10 @@ const getRouteName = (route) => {
   if (
     routeName?.includes("ChatDetail") ||
     routeName?.includes("Signup") ||
-    routeName?.includes("Login")
+    routeName?.includes("Login") || 
+    routeName?.includes("Welcome1") || 
+    routeName?.includes("Welcome2") ||
+    routeName?.includes("Welcome3")
   ) {
     console.log("routeName: ", routeName);
     return "none";

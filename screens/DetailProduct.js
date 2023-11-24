@@ -13,7 +13,7 @@ import dishes from "./Data/DataDish";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { UsersData } from "./Data/UserData";
 import { addCart, NewCartData } from "./Data/DataCart";
-import { GetCardAPI } from "./functions/GetCard";
+import { GetCardAPI } from '../functions/GetCard';
 
 const DetailProduct = () => {
   const route = useRoute();

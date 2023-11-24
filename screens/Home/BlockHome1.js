@@ -41,7 +41,7 @@ const BlockHome1 = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => {}}
+                  onPress={() => { }}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
@@ -66,20 +66,30 @@ const BlockHome1 = ({ navigation }) => {
           <View style={styles.restaurant}>
             <TouchableOpacity
               onPress={() => {
-                navigation.push("DetailRestaurant");
+                navigation.navigate("DetailRestaurant", {
+                  RestaurantId: 1,
+                });
               }}
             >
               <View style={styles.rest1}>
                 <Image source={require("../../assets/restaurantImage2.png")} />
                 <Text style={styles.restName1}>Vegan Resto</Text>
-                <Text style={styles.restTime1}>12 Mins</Text>
+                <Text style={styles.restTime1}>8 Mins</Text>
               </View>
             </TouchableOpacity>
-            <View style={styles.rest2}>
-              <Image source={require("../../assets/restaurantImage1.png")} />
-              <Text style={styles.restName2}>Healthy Food</Text>
-              <Text style={styles.restTime2}>8 Mins</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("DetailRestaurant", {
+                  RestaurantId: 2,
+                });
+              }}
+            >
+              <View style={styles.rest2}>
+                <Image source={require("../../assets/restaurantImage1.png")} />
+                <Text style={styles.restName2}>Healthy Food</Text>
+                <Text style={styles.restTime2}>10 Mins</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.popular}>
             <View>
@@ -274,10 +284,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  imageCss: { 
-    height: 64, 
-    width: 64, 
-    borderRadius: 10 
+  imageCss: {
+    height: 64,
+    width: 64,
+    borderRadius: 10
   },
   namedish: {
     fontSize: 18,

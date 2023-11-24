@@ -11,7 +11,7 @@ const EditProfile = () => {
   return (
     <View>
       <Image
-        source={require("../assets/images/Pattern.png")}
+        source={require("../../assets/images/Pattern.png")}
         style={styles.ImageCSS}
       ></Image>
       <TouchableOpacity
@@ -54,7 +54,7 @@ const EditProfile = () => {
           }}
         >
           <Image
-            source={require("../assets/images/Gallery.png")}
+            source={require("../../assets/images/Gallery.png")}
             style={{
               objectFit: "cover",
             }}
@@ -76,13 +76,13 @@ const EditProfile = () => {
           }}
         >
           <Image
-            source={require("../assets/images/Group.png")}
+            source={require("../../assets/images/Group.png")}
             style={{
               objectFit: "cover",
             }}
           />
           <Text style={{ fontSize: 16, fontWeight: "bold", top: 7 }}>
-            From Gallery
+            Take Photo
           </Text>
         </View>
         <View
@@ -98,7 +98,8 @@ const EditProfile = () => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={handleNextButtonClick}>
+          <TouchableOpacity onPress={handleNextButtonClick}
+          >
             <Text
               style={{
                 fontSize: 18,

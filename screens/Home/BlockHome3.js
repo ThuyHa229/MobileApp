@@ -152,12 +152,14 @@ const BlockHome3 = () => {
             <TouchableOpacity>
               <View style={styles.viewIconNotificationHome}>
                 <Ionicons
-                  style={styles.iconnotificationhome}
-                  name="notifications-outline"
-                  color={"#6B50F6"}
-                  size={30}
-                ></Ionicons>
-                <View style={styles.Havenotification}></View>
+                  style={{ color: "#6B50F6" }}
+                  name="chevron-back-outline"
+                  size={24}
+                  color="black"
+                  onPress={() => {
+                    navigation.navigate("Home");
+                  }}
+                />
               </View>
             </TouchableOpacity>
           </View>
@@ -248,7 +250,7 @@ const BlockHome3 = () => {
                 )}
               </View>
             </>
-          ) :filteredDishes.length > 0 && filteredRestaurants.length == 0  ? (
+          ) : filteredDishes.length > 0 && filteredRestaurants.length == 0 ? (
             <>
               <Text style={{ marginTop: 20, fontWeight: "800" }}>Dishes:</Text>
               {filteredDishes.map((dish, index) => (
@@ -311,7 +313,7 @@ const BlockHome3 = () => {
               </View>
             </>
           ) : (
-                  <Text>Không có nhà hàng phù hợp</Text>
+            <Text>Không có nhà hàng phù hợp</Text>
           )}
         </View>
       </View>

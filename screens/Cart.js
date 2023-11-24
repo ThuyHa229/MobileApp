@@ -14,9 +14,11 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import { UsersData } from "./Data/UserData";
 import dishes from "./Data/DataDish";
 import { NewCartData } from "./Data/DataCart";
+import { updateQuantityItem } from "../functions/GetCard";
 
 const Cart = () => {
   console.log("NewCartData1111111: ", NewCartData);
+
   const createNewArray = () => {
     const newArray = [];
     NewCartData.forEach((itemA) => {
@@ -43,47 +45,24 @@ const Cart = () => {
   const route = useRoute();
   const [showAlert, setShowAlert] = useState(false);
   const navigation = useNavigation();
-
-  const initialCartItems = [
-    {
-      id: 1,
-      name: "Spacy fresh crab",
-      message: "Waroenk kita",
-      money: 35,
-      quantity: 1,
-      profileImage: require("../assets/photomenu1.png"),
-      discount: 5,
-    },
-    {
-      id: 2,
-      name: "Paul Koch",
-      message: "Waroenk kita",
-      money: 40,
-      quantity: 1,
-      profileImage: require("../assets/photomenu.png"),
-      discount: 5,
-    },
-    {
-      id: 3,
-      name: "Carla Klein",
-      message: "Waroenk kita",
-      money: 45,
-      quantity: 1,
-      profileImage: require("../assets/photomenu2.png"),
-      discount: 5,
-    },
-  ];
+  const [TotalPricesInCart, setTotalPricesInCart] = useState(calculateTotalCart);
+  const [DeliveryCharge, setDeliveryCharge] = useState();
+  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] =
+    useState(calculateTotalMoney);
+  const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
+    calculateTotalDiscount
+  );
 
   const [cartItems, setCartItems] = useState(resultArray);
-  console.log("cartItems: ", cartItems);
+  console.log("cartItems123: ", cartItems);
 
-  //
+
   const handleDecreaseQuantity = (id) => {
     const updatedItems = [...cartItems];
     const itemIndex = updatedItems.findIndex((item) => item.id === id);
 
     if (updatedItems[itemIndex].quantity > 1) {
-      updatedItems[itemIndex].quantity -= 1;
+      const updatequantity = updatedItems[itemIndex].quantity -= 1;
       setCartItems(updatedItems);
       const newTotalItemsPrices = calculateTotalMoney();
       setTotalPriceItemsInCart(newTotalItemsPrices);
@@ -91,6 +70,7 @@ const Cart = () => {
       setTotalPricesInCart(
         newTotalItemsPrices + DeliveryCharge - totalDiscount
       );
+      updateQuantityItem(id, updatequantity)
     }
   };
 
@@ -98,158 +78,161 @@ const Cart = () => {
     const updatedItems = [...cartItems];
     const itemIndex = updatedItems.findIndex((item) => item.id === id);
 
-    updatedItems[itemIndex].quantity += 1;
-    setCartItems(updatedItems);
-    const newTotalItemsPrices = calculateTotalMoney();
-    setTotalPriceItemsInCart(newTotalItemsPrices);
-    const totalDiscount = calculateTotalDiscount();
-    setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
-  };
+    const updatequantity = updatedItems[itemIndex].quantity += 1;
+  setCartItems(updatedItems);
+  const newTotalItemsPrices = calculateTotalMoney();
+  setTotalPriceItemsInCart(newTotalItemsPrices);
+  const totalDiscount = calculateTotalDiscount();
+  setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
+  updateQuantityItem(id, updatequantity)
+};
 
-  const handleDeleteItem = (id) => {
-    const updatedItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedItems);
-  };
+const handleDeleteItem = (id) => {
+  const updatedItems = cartItems.filter((item) => item.id !== id);
+  setCartItems(updatedItems);
+};
 
-  useEffect(() => {
-    if (cartItems.length == 0) {
-      setDeliveryCharge(0);
-    } else {
-      setDeliveryCharge(30);
-    }
-    const newTotalItemsPrices = calculateTotalMoney();
-    setTotalPriceItemsInCart(newTotalItemsPrices);
+useEffect(() => {
+  if (cartItems.length == 0) {
+    setDeliveryCharge(0);
+  } else {
+    setDeliveryCharge(30);
+  }
+  const newTotalItemsPrices = calculateTotalMoney();
+  setTotalPriceItemsInCart(newTotalItemsPrices);
 
-    const totalDiscount = calculateTotalDiscount();
-    setTotalDiscountItemsInCart(totalDiscount);
-    setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
-    console.log("cartItems: ", cartItems);
-  }, [cartItems]);
+  const totalDiscount = calculateTotalDiscount();
+  setTotalDiscountItemsInCart(totalDiscount);
+  setTotalPricesInCart(newTotalItemsPrices + DeliveryCharge - totalDiscount);
+}, [cartItems]);
 
-  const calculateTotalMoney = () => {
-    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  };
-  const calculateTotalDiscount = () => {
-    return cartItems.reduce((acc, item) => acc + item.discount, 0);
-  };
+useEffect(() => {
 
-  const FirstTotalPrices = () => {
-    const totalMoney =  calculateTotalMoney();
-    const totalDiscount = calculateTotalDiscount();
-    return totalMoney + totalDiscount - DeliveryCharge;
-  };
+  setTotalPricesInCart(TotalPriceItemsInCart + DeliveryCharge - TotalDiscountItemsInCart);
 
-  const [DeliveryCharge, setDeliveryCharge] = useState();
-  const [TotalPriceItemsInCart, setTotalPriceItemsInCart] =
-    useState(calculateTotalMoney);
-  const [TotalDiscountItemsInCart, setTotalDiscountItemsInCart] = useState(
-    calculateTotalDiscount
-  );
-  const [TotalPricesInCart, setTotalPricesInCart] = useState(FirstTotalPrices);
+}, [DeliveryCharge, TotalDiscountItemsInCart, TotalPriceItemsInCart]);
 
-  const renderedItems = cartItems.map((item, index) => (
-    <View key={index}>
-      <View style={styles.chating}>
-        <View style={styles.photoProfile}>
-          <Image source={{ uri: item.image }} style={styles.photoProfile} />
-        </View>
-        <View style={styles.NameAndNotification}>
-          <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
-          <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
-            {item.description}
-          </Text>
-          <Text
-            style={{
-              marginLeft: 10,
-              marginTop: 7,
-              color: "#6B50F6",
-              fontWeight: "900",
-            }}
-          >
-            $ {item.price}
-          </Text>
-        </View>
-        <View
+const calculateTotalMoney = () => {
+  return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+};
+const calculateTotalDiscount = () => {
+  return cartItems.reduce((acc, item) => acc + item.discount, 0);
+};
+
+const calculateTotalCart = () => {
+  return TotalPriceItemsInCart + TotalDiscountItemsInCart - DeliveryCharge
+}
+
+
+console.log("TotalPriceItemsInCart: ", TotalPriceItemsInCart);
+console.log("TotalDiscountItemsInCart: ", TotalDiscountItemsInCart);
+console.log("DeliveryCharge: ", DeliveryCharge);
+console.log("TotalPricesInCart new: ", TotalPricesInCart);
+
+
+const renderedItems = cartItems.map((item, index) => (
+  <View key={index}>
+    <View style={styles.chating}>
+      <View style={styles.photoProfile}>
+        <Image source={{ uri: item.image }} style={styles.photoProfile} />
+      </View>
+      <View style={styles.NameAndNotification}>
+        <Text style={{ marginLeft: 10, marginTop: 7 }}>{item.name}</Text>
+        <Text style={{ marginLeft: 10, marginTop: 7, opacity: 0.3 }}>
+          {item.description}
+        </Text>
+        <Text
           style={{
-            flexDirection: "row",
-            marginRight: 40,
-            alignItems: "center",
-            justifyContent: "center",
+            marginLeft: 10,
+            marginTop: 7,
+            color: "#6B50F6",
+            fontWeight: "900",
           }}
         >
-          <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)}>
-            <View style={{ ...styles.minus }}>
-              <Text style={{ color: "#181818", fontWeight: "900" }}>-</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.quantityItems}>
-            <Text style={{ color: "#181818", fontSize: 16 }}>
-              {item.quantity}
-            </Text>
+          $ {item.price}
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          marginRight: 40,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)}>
+          <View style={{ ...styles.minus }}>
+            <Text style={{ color: "#181818", fontWeight: "900" }}>-</Text>
           </View>
-          <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
-            <View style={styles.increase}>
-              <Text style={{ color: "#FFFF" }}>+</Text>
-            </View>
-          </TouchableOpacity>
+        </TouchableOpacity>
+        <View style={styles.quantityItems}>
+          <Text style={{ color: "#181818", fontSize: 16 }}>
+            {item.quantity}
+          </Text>
         </View>
+        <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
+          <View style={styles.increase}>
+            <Text style={{ color: "#FFFF" }}>+</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
-  ));
-  return (
-    <>
-      <View style={styles.container}>
-        <OrderDetails
-          cartItems={cartItems}
-          renderedItems={renderedItems}
-          handleDeleteItem={handleDeleteItem}
-          styles={styles}
-        />
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <View style={styles.TotalPrices}>
-            {/* <Image 
+  </View>
+));
+return (
+  <>
+    <View style={styles.container}>
+      <OrderDetails
+        cartItems={cartItems}
+        renderedItems={renderedItems}
+        handleDeleteItem={handleDeleteItem}
+        styles={styles}
+      />
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.TotalPrices}>
+          {/* <Image 
               source={require("../assets/images/Pattern.png")} 
               style={{
                 zIndex: 2
               }} 
 
             /> */}
-            <View style={styles.TotalViewNameAndPricesItems}>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Sub-Total</Text>
-                <Text style={styles.PriceItem}>{TotalPriceItemsInCart} $</Text>
-              </View>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Delivery Charge</Text>
-                <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
-              </View>
-              <View style={styles.TitleAndPrices}>
-                <Text style={styles.TitleItem}>Discount</Text>
-                <Text style={styles.PriceItem}>
-                  {TotalDiscountItemsInCart} $
-                </Text>
-              </View>
-              <View style={styles.ViewTotal}>
-                <Text style={styles.TextTotal}>Total</Text>
-                <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
-              </View>
+          <View style={styles.TotalViewNameAndPricesItems}>
+            <View style={styles.TitleAndPrices}>
+              <Text style={styles.TitleItem}>Sub-Total</Text>
+              <Text style={styles.PriceItem}>{TotalPriceItemsInCart} $</Text>
             </View>
-            <TouchableOpacity onPress={() => setShowAlert(!showAlert)}>
-              <View style={styles.BtnPlaceBuyOrder}>
-                <Text style={styles.TextPMO}>Place My Order</Text>
-              </View>
-            </TouchableOpacity>
-            <AwesomeAlert
-              style={styles.AlertAddToCart}
-              show={showAlert}
-              title="thanh cong"
-              message="good chop"
-            ></AwesomeAlert>
+            <View style={styles.TitleAndPrices}>
+              <Text style={styles.TitleItem}>Delivery Charge</Text>
+              <Text style={styles.PriceItem}>{DeliveryCharge} $</Text>
+            </View>
+            <View style={styles.TitleAndPrices}>
+              <Text style={styles.TitleItem}>Discount</Text>
+              <Text style={styles.PriceItem}>
+                {TotalDiscountItemsInCart} $
+              </Text>
+            </View>
+            <View style={styles.ViewTotal}>
+              <Text style={styles.TextTotal}>Total</Text>
+              <Text style={styles.TotalPrice}>{TotalPricesInCart} $</Text>
+            </View>
           </View>
+          <TouchableOpacity onPress={() => setShowAlert(!showAlert)}>
+            <View style={styles.BtnPlaceBuyOrder}>
+              <Text style={styles.TextPMO}>Place My Order</Text>
+            </View>
+          </TouchableOpacity>
+          <AwesomeAlert
+            style={styles.AlertAddToCart}
+            show={showAlert}
+            title="thanh cong"
+            message="good chop"
+          ></AwesomeAlert>
         </View>
       </View>
-    </>
-  );
+    </View>
+  </>
+);
 };
 export default Cart;
 const styles = StyleSheet.create({
